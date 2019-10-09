@@ -7,70 +7,74 @@ include "header.php";
 
 <body>
 <?php
-include 'nav.php';
+include 'side_nav.php';
 ?>
 
 <!-- Page content -->
 <div class="content">
+<?php include 'top_nav.php'; ?>
+<br>
 <!-- first row for inserting -->
   <div class="row">
 
-  <div class="col-6" >
-  <!-- Add letter -->
-<a>
-<div class="card bg-dark text-white">
-  <img src="images/envelope_add.png" class="card-img" alt="...">
-  <div class="card-img-overlay">
-    <h5 class="card-title">Card title</h5>
+  <div class="col-sm-4">
+<a href="side_nav.php" class="card bg-dark">
+    <div >
     
-  </div>
-</div>
- </a>
-
+      <div class="card-body">
+       
+      </div>
+    </div>
+    </a>
   </div>
 
-  <div class="col-6">
-  <!-- Dispatch letters -->
-  <a>
-  <div class="card bg-dark text-white">
-  <img src="images/envelope_minus.png" class="card-img" alt="...">
-  <div class="card-img-overlay">
-    <h5 class="card-title">Card title</h5>
+  <div class="col-sm-4">
+<a href="side_nav.php" class="card bg-dark">
+    <div >
     
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        Go somewhere
+      </div>
+    </div>
+    </a>
   </div>
-</div>
- </a>
+
+  <div class="col-sm-4">
+<a href="side_nav.php" class="card bg-dark">
+    <div >
+    
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        Go somewhere
+      </div>
+    </div>
+    </a>
   </div>
   </div>
   <!-- End of first row -->
+  <hr>
 
   <!-- second row for viewing -->
   <div class="row">
+  <table class="table table-striped table-bordered table-hover">
+  <caption>Received Letters</caption>
+  <thead class="thead-dark">
+    <tr>
+    <th scope="col">Time</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Details</th>
 
-  <div class="col-6 ">
-  <!-- View Received letters -->
-  <a>
-  <div class="card bg-transparent text-white">
-  <img src="images/envelope_open.png" class="card-img" alt="...">
-  <div class="card-img-overlay">
-    <h5 class="card-title">Card title</h5>
-    
-  </div>
-</div>
- </a>
-  </div>
+    </tr>
+  </thead>
 
-  <div class="col-6">
-  <!-- View Dispatched letters -->
-  <a>
-  <div class="card bg-transparent text-white">
-  <img src="images/envelope_closed.png" class="card-img" alt="...">
-  <div class="card-img-overlay">
-    <h5 class="card-title">Card title</h5>
-  </div>
-</div>
- </a>
-  </div>
+  <tbody>
+
+  
   </div>
   <!-- End of second row -->
 

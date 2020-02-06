@@ -8,12 +8,13 @@
                 </div>
                 <div class="mr-5"><h1>26 </h1> <h5>Received!</h5> </div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
+              <!-- <a  class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
                 </span>
-              </a>
+                
+              </a> -->
             </div>
           </div>
 
@@ -25,12 +26,12 @@
                 </div>
                 <div class="mr-5"><h1>11 </h1> <h5>Dispatching!</h5></div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
+              <!-- <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
                 </span>
-              </a>
+              </a> -->
             </div>
           </div>
 
@@ -42,12 +43,12 @@
                 </div>
                 <div class="mr-5"><h1>126 </h1> <h5>Dispatched!</h5></div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
+              <!-- <a class="card-footer text-white clearfix small z-1" href="#">
                 <span class="float-left">View Details</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>
                 </span>
-              </a>
+              </a> -->
             </div>
           </div>
 

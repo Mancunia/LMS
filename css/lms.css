@@ -1,3 +1,29 @@
 .nav_inlink{
-    
+   color: rgb(2, 2, 2); 
+   padding-right: 100px;
 }
+.card a{
+    color: black;
+}
+
+nav{
+background-color: rgba(0, 0, 0, 0.729);
+
+}
+
+.side{
+
+position: fixed;
+top: 60px;
+
+}
+.links{
+
+    margin-right: 50px;
+
+}
+
+.my_body{
+    margin-top: 45px;
+}
+

@@ -27,7 +27,7 @@ include_once 'requires/header.php';
 
     <div id="content-wrapper">
 
-      <div class="container-fluid">
+      <div class="container-fluid my_body">
 
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
@@ -41,54 +41,33 @@ include_once 'requires/header.php';
        include_once 'includes/cards.php';
        ?>
 
-        <!-- DataTables Example -->
-        <!-- <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i>
-            Data Table Example</div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>S/N</th>
-                    <th>Ref.No</th>
-                    <th>Subjext</th>
-                    <th>From</th>
-                    <th>Date</th>
-                    
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr>
-                  <th>S/N</th>
-                    <th>Ref.No</th>
-                    <th>Subjext</th>
-                    <th>From</th>
-                    <th>Date</th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                  <tr>
-                    <td>61</td>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>2011/04/25</td>
-                  </tr>
-                 
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
-      </div>  -->
-
 
       <!-- .................................................................................... -->
 
-      <div class="card mb-3">
+  
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12"> 
+      <!-- Nav tabs -->
+      <div class="">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active nav_inlink"><a class=" btn btn-outline-primary" href="#received" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-arrow-down"></i>  <span>Received</span></a></li>
+          <li role="presentation" class="nav_inlink "><a class=" btn btn-outline-warning" href="#dispatching" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-history"></i>  <span>Dispatching</span></a></li>
+          <li role="presentation" class="nav_inlink "><a class=" btn btn-outline-success" href="#dispatched" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-arrow-down"></i>  <span>Dispatched</span></a></li>
+          
+        </ul>
+
+        
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+ <!-- ............................received................................... -->
+          <div role="tabpanel" class="tab-pane active" id="received">
+            
+          <div class="card mb-3">
           <div class="card-header bg-primary" id="received">
             <i class="fas fa-arrow-down"></i>
             Received</div>
@@ -106,62 +85,7 @@ include_once 'requires/header.php';
                   </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Sonya Frost</td>
-                <td>Software Engineer</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-                <td>$103,600</td>
-            </tr>
-            <tr>
-                <td>Quinn Flynn</td>
-                <td>Support Lead</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>$342,000</td>
-            </tr>
-            <tr>
-                <td>Dai Rios</td>
-                <td>Personnel Lead</td>
-                <td>Edinburgh</td>
-                <td>35</td>
-                <td>$217,500</td>
-            </tr>
-            <tr>
-                <td>Gavin Joyce</td>
-                <td>Developer</td>
-                <td>Edinburgh</td>
-                <td>42</td>
-                <td>$92,575</td>
-            </tr>
-            <tr>
-                <td>Martena Mccray</td>
-                <td>Post-Sales support</td>
-                <td>Edinburgh</td>
-                <td>46</td>
-                <td>$324,050</td>
-            </tr>
-            <tr>
-                <td>Jennifer Acosta</td>
-                <td>Junior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>43</td>
-                <td>$75,650</td>
-            </tr>
+           
             <tr>
                 <td>Shad Decker</td>
                 <td>Regional Director</td>
@@ -185,12 +109,12 @@ include_once 'requires/header.php';
 </div>
 </div>
 
-<hr>
+          </div>
 
-
-    <!-- .................................................................................... -->
-    
-    <div class="card mb-3">
+<!-- ............................dispatching................................... -->
+          <div role="tabpanel" class="tab-pane" id="dispatching">
+           
+          <div class="card mb-3">
           <div class="card-header bg-warning" id="dispatching">
             <i class="fas fa-history"></i>
             Dispatching</div>
@@ -202,89 +126,13 @@ include_once 'requires/header.php';
                     <th>S/N</th>
                     <th>Ref.No</th>
                     <th>Subject</th>
-                    <th>From</th>
+                    <th>To</th>
                     <th>Date</th>
                     
                   </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Jena Gaines</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>30</td>
-                <td>$90,560</td>
-            </tr>
-            <tr>
-                <td>Haley Kennedy</td>
-                <td>Senior Marketing Designer</td>
-                <td>London</td>
-                <td>43</td>
-                <td>$313,500</td>
-            </tr>
-            <tr>
-                <td>Tatyana Fitzpatrick</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>19</td>
-                <td>$385,750</td>
-            </tr>
-            <tr>
-                <td>Michael Silva</td>
-                <td>Marketing Designer</td>
-                <td>London</td>
-                <td>66</td>
-                <td>$198,500</td>
-            </tr>
-            <tr>
-                <td>Bradley Greer</td>
-                <td>Software Engineer</td>
-                <td>London</td>
-                <td>41</td>
-                <td>$132,000</td>
-            </tr>
-            <tr>
-                <td>Angelica Ramos</td>
-                <td>Chief Executive Officer (CEO)</td>
-                <td>London</td>
-                <td>47</td>
-                <td>$1,200,000</td>
-            </tr>
-            <tr>
-                <td>Suki Burks</td>
-                <td>Developer</td>
-                <td>London</td>
-                <td>53</td>
-                <td>$114,500</td>
-            </tr>
-            <tr>
-                <td>Prescott Bartlett</td>
-                <td>Technical Author</td>
-                <td>London</td>
-                <td>27</td>
-                <td>$145,000</td>
-            </tr>
-            <tr>
-                <td>Timothy Mooney</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>37</td>
-                <td>$136,200</td>
-            </tr>
-            <tr>
-                <td>Bruno Nash</td>
-                <td>Software Engineer</td>
-                <td>London</td>
-                <td>38</td>
-                <td>$163,500</td>
-            </tr>
-            <tr>
-                <td>Hermione Butler</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>47</td>
-                <td>$356,250</td>
-            </tr>
+            
             <tr>
                 <td>Lael Greer</td>
                 <td>Systems Administrator</td>
@@ -298,7 +146,7 @@ include_once 'requires/header.php';
                     <th>S/N</th>
                     <th>Ref.No</th>
                     <th>Subject</th>
-                    <th>From</th>
+                    <th>To</th>
                     <th>Date</th>
                     
                   </tr>
@@ -307,14 +155,17 @@ include_once 'requires/header.php';
     </div>
 </div>
 </div>
+ 
 
+          </div>
 
-<hr>
+<!-- ............................dispatched................................... -->
+          <div role="tabpanel" class="tab-pane" id="dispatched">
 
-<div class="card mb-3">
+           <div class="card mb-3">
           <div class="card-header bg-success" id="dispatched">
             <i class="fas fa-arrow-up"></i>
-            Data Table Example</div>
+            Dispatched</div>
           <div class="card-body">
             <div class="table-responsive">
       <table id="" class="display table table-hover" style="width:100%">
@@ -323,68 +174,13 @@ include_once 'requires/header.php';
                     <th>S/N</th>
                     <th>Ref.No</th>
                     <th>Subject</th>
-                    <th>From</th>
+                    <th>To</th>
                     <th>Date</th>
                     
                   </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Sonya Frost</td>
-                <td>Software Engineer</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-                <td>$103,600</td>
-            </tr>
-            <tr>
-                <td>Quinn Flynn</td>
-                <td>Support Lead</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>$342,000</td>
-            </tr>
-            <tr>
-                <td>Dai Rios</td>
-                <td>Personnel Lead</td>
-                <td>Edinburgh</td>
-                <td>35</td>
-                <td>$217,500</td>
-            </tr>
-            <tr>
-                <td>Gavin Joyce</td>
-                <td>Developer</td>
-                <td>Edinburgh</td>
-                <td>42</td>
-                <td>$92,575</td>
-            </tr>
-            <tr>
-                <td>Martena Mccray</td>
-                <td>Post-Sales support</td>
-                <td>Edinburgh</td>
-                <td>46</td>
-                <td>$324,050</td>
-            </tr>
-            <tr>
-                <td>Jennifer Acosta</td>
-                <td>Junior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>43</td>
-                <td>$75,650</td>
-            </tr>
+            
             <tr>
                 <td>Shad Decker</td>
                 <td>Regional Director</td>
@@ -398,7 +194,7 @@ include_once 'requires/header.php';
                     <th>S/N</th>
                     <th>Ref.No</th>
                     <th>Subject</th>
-                    <th>From</th>
+                    <th>To</th>
                     <th>Date</th>
                     
                   </tr>
@@ -406,9 +202,17 @@ include_once 'requires/header.php';
     </table>
 </div>
 </div>
-</div>
+</div> 
 
-<hr>
+          </div>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
       

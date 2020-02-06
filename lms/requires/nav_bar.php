@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand navbar-dark nav fixed-top">
 
 <a class="navbar-brand mr-1" href="index.html">GRA LMS</a>
 
@@ -8,12 +8,12 @@
 
 <!-- Navbar Search -->
 <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-  <div class="input-group">
-  <a href="#received" class="nav_inlink">Received</a>
+  <div class="input-group links">
+  <!-- <a href="#received" class="nav_inlink">Received</a>
 
 <a href="#dispatching" class="nav_inlink">Dispatching</a>
 
-<a href="#dispatched" class="nav_inlink">Dispatched</a>
+<a href="#dispatched" class="nav_inlink">Dispatched</a> -->
     </div>
   </div>
 </div>

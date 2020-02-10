@@ -18,10 +18,11 @@ include_once 'requires/header.php';
 
 <!-- letter IN -->
 
-<div class="container-fluid">
+<center>
+        <div class="col-md-9 card" style="width:80rem;">
 
-<div class="card">
-<div class="card-header">
+<div class="">
+<div class="card-header bg-primary">
 Receive New Letter!
 </div>
 
@@ -66,7 +67,8 @@ Source: <input class="form-control" type="text" name="source">
 <div class="row">
 
   <div class="col-6">
-Sender:<input class="form-control" type="text" name="sender" >
+Sender:
+<input class="form-control" type="text" name="sender" >
   </div>
    <div class="col-6">
 Destination: <input class="form-control" type="text" name="destination">
@@ -90,7 +92,7 @@ Destination: <input class="form-control" type="text" name="destination">
 
 
 </div>
-
+</center>
 
   
 

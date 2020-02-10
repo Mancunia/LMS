@@ -1,3 +1,10 @@
+ 
+
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  </div>
  <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
@@ -5,11 +12,6 @@
           </div>
         </div>
       </footer>
-
-    </div>
-    <!-- /.content-wrapper -->
-
-  </div>
   <!-- /#wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -35,6 +37,8 @@
       </div>
     </div>
   </div>
+
+  
 
   <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>
@@ -65,3 +69,6 @@
 } );
 
   </script>
+
+</body>
+</html>

@@ -12,30 +12,12 @@ include_once 'requires/header.php';
 
    <?php
 
-   include_once 'requires/nav_bar.php';
+   include_once 'requires/heading.php';
 
    ?>
 
-  
 
-   <?php
-
-   include_once 'requires/sidebar.php';
-
-
-   ?>
-
-    <div id="content-wrapper">
-
-      <div class="container-fluid my_body">
-
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">Overview</li>
-        </ol>
+    
 
        <?php
        include_once 'includes/cards.php';
@@ -55,7 +37,7 @@ include_once 'requires/header.php';
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active nav_inlink"><a class=" btn btn-outline-primary" href="#received" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-arrow-down"></i>  <span>Received</span></a></li>
           <li role="presentation" class="nav_inlink "><a class=" btn btn-outline-warning" href="#dispatching" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-history"></i>  <span>Dispatching</span></a></li>
-          <li role="presentation" class="nav_inlink "><a class=" btn btn-outline-success" href="#dispatched" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-arrow-down"></i>  <span>Dispatched</span></a></li>
+          <li role="presentation" class="nav_inlink "><a class=" btn btn-outline-success" href="#dispatched" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-arrow-up"></i>  <span>Dispatched</span></a></li>
           
         </ul>
 

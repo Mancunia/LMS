@@ -59,30 +59,35 @@ include_once 'requires/header.php';
         <thead>
         <tr>
                     <th>S/N</th>
-                    <th>Ref.No</th>
+                    <th>Ref</th>
                     <th>Subject</th>
                     <th>From</th>
                     <th>Date</th>
+                    <th>Action</th>
                     
                   </tr>
         </thead>
         <tbody>
            
             <tr>
-                <td>Shad Decker</td>
+                <td>1</td>
                 <td>Regional Director</td>
-                <td>Edinburgh</td>
-                <td>51</td>
-                <td>$183,000</td>
+                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim illo nihil maxime.
+                 Similique inventore, perspiciatis, molestias, consequuntur quo doloribus non architecto natus laudantium harum dolores quas dolorem nihil sint deserunt.
+                 </td>
+                <td>P&P</td>
+                <td>01/12/2020</td>
+                <th><a href="dispatch.php" class="btn btn-outline-dark">Dispatch</a></th>
             </tr>
         </tbody>
         <tfoot>
         <tr>
                     <th>S/N</th>
-                    <th>Ref.No</th>
+                    <th>Ref</th>
                     <th>Subject</th>
                     <th>From</th>
                     <th>Date</th>
+                    <th>Action</th>
                     
                   </tr>
         </tfoot>

@@ -57,13 +57,13 @@ function newRole($role)
 
 
 //Like-Admin functions
-    function getOffices(){
+    function getUnit(){
 try {
     //code...
     $conn = Database::getInstance();
         $db = $conn->getConnection();
 
-        $result=mysqli_query($db,"SELECT f.*,d.* FROM office f join department d on f.department_id=d.department_id where f.status = 1 ");
+        $result=mysqli_query($db,"SELECT f.unit_name as unit ,d.department_name as departments,f.unit_id FROM unit f join department d on f.department_id=d.department_id where f.status = 1 order by d.department_name ");
         
         return $result;  
 }  
@@ -361,7 +361,7 @@ try{
     $conn = Database::getInstance();
     $db = $conn->getConnection();
 
-$results=mysqli_query($db,"SELECT u.*,d.department_id FROM user u join office f on f.office_id=u.office_id join department d on f.department_id=d.department_id  WHERE username='$username' AND password='$password'");
+$results=mysqli_query($db,"SELECT u.*,d.department_id FROM users u join unit f on f.unit_id=u.unit_id join department d on f.department_id=d.department_id  WHERE userName='$username' AND password='$password'");
    //fetch into an array
     $result=mysqli_fetch_array($results);
     return $result;
@@ -451,9 +451,10 @@ return "
     </div>
 ";
         }
-        catch (PDOException $ex){
-            echo $ex->getMessage();
-            } 
+        catch (Exception $e){
+    $error = $e->getMessage();
+    echo $error;
+}
     }
 
 
@@ -478,11 +479,80 @@ return "
     </div>
 ";
         }
-        catch (PDOException $ex){
-            echo $ex->getMessage();
-            } 
+        catch (Exception $e){
+    $error = $e->getMessage();
+    echo $error;
+}
     }
 
+
+
+
+
+    function getMenu($userid){
+
+        try{   
+            $conn = Database::getInstance();
+            $db = $conn->getConnection();
+
+            // activate
+        $result=mysqli_query($db," SELECT * from menu m join menu_link ml on m.menu_id=ml.menu_id where ml.user_id='$userid'; ");
+        
+        return $result;
+        }
+        catch (Exception $e){
+            $error = $e->getMessage();
+         echo $error;
+        }
+
+
+    }
+
+
+
+
+       
+
 }
+
+ /*................................................. Letter controls ................................................ */
+   
+class lms_con{
+
+    // truncate string at word
+      function trim($string) {  
+    
+        $limit=30;
+        $break=" ";
+        
+        if (strlen($string) <= $limit) return $string;
+        
+        if (false !== ($max = strpos($string, $break, $limit))) {
+             
+            if ($max < strlen($string) - 1) {
+                
+                $string = substr($string, 0, $max) . $pad;
+                
+            }
+            
+        }
+        
+        return $string;
+        
+        }
+
+        function post_letter(){
+
+        }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    }
 
 ?>

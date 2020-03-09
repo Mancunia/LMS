@@ -4,14 +4,14 @@ require 'conn.php';
 class app_user{
 
     //Admin functions
-    function newOffice($office,$acro,$depart)
+    function newunit($unit,$acro,$depart)
     {
 
         $conn = Database::getInstance();
         $db = $conn->getConnection();
 
-       mysqli_query($db," INSERT INTO `lms`.`office` (`office_name`, `office_acronym`,`department_id`)
-        VALUES ('$office', '$acro','$depart')" );
+       mysqli_query($db," INSERT INTO `lms`.`unit` (`unit_name`, `unit_acronym`,`department_id`)
+        VALUES ('$unit', '$acro','$depart')" );
        
     }
 
@@ -73,21 +73,39 @@ catch (PDOException $ex){
               
     }
 
-    function getOffices_id($d){
+    function getunits_id($d){
         try {
             //code...
             $conn = Database::getInstance();
                 $db = $conn->getConnection();
         
-                $result=mysqli_query($db,"SELECT f.*,d.* FROM office f join department d on f.department_id=d.department_id where f.department_id='$d' ");
+                $result=mysqli_query($db,"SELECT f.*,d.* FROM unit f join department d on f.department_id=d.department_id where f.department_id='$d' ");
                 
                 return $result;  
         }  
-        catch (PDOException $ex){
+        catch (Exception $ex){
             echo $ex->getMessage();
             }
                       
             }
+
+
+            function exMyunit($unit_id){
+                try {
+                    //code...
+                    $conn = Database::getInstance();
+                        $db = $conn->getConnection();
+                
+                        $result=mysqli_query($db,"SELECT f.unit_name as unit ,d.department_name as departments,f.unit_id FROM unit f join department d on f.department_id=d.department_id where f.status = 1 and f.unit_id !='$unit_id' order by d.department_name ");
+                        
+                        return $result;  
+                }  
+                catch (PDOException $ex){
+                    echo $ex->getMessage();
+                    }
+
+            }
+
 
     function getDepartment(){
         $conn = Database::getInstance();
@@ -99,16 +117,16 @@ catch (PDOException $ex){
     }
     
     //get staff
-    function getStaff($office){
+    function getStaff($unit){
         try{
             $conn = Database::getInstance();
         $db = $conn->getConnection();
-            if($office==1){
-                $result=mysqli_query($db,"SELECT * FROM users where office>=2");
+            if($unit==1){
+                $result=mysqli_query($db,"SELECT * FROM users where unit>=2");
                 // return $result; 
             }
             else{
-            $result=mysqli_query($db,"SELECT * FROM users where role='staff' and office='$office'");
+            $result=mysqli_query($db,"SELECT * FROM users where role='staff' and unit='$unit'");
             }
             return $result;
         }
@@ -239,7 +257,7 @@ catch (PDOException $ex){
     }
 
 
-    function newUser($pers_id,$username,$role,$office,$acnt,$by){
+    function newUser($pers_id,$username,$role,$unit,$acnt,$by){
 //New user acount
  $conn = Database::getInstance();
         $db = $conn->getConnection();
@@ -257,8 +275,8 @@ catch (PDOException $ex){
         }
         else{
 
-            $feed=mysqli_query($db," INSERT INTO `lms`.`user` (`username`, `password`, `person_id`, `role`, `grp_id`, `office_id`, `date_created`, `created_by`) 
-        VALUES ('$username', '$username', '$pers_id', '$role', '$acnt', '$office', NOW(), '$by')");
+            $feed=mysqli_query($db," INSERT INTO `lms`.`user` (`username`, `password`, `person_id`, `role`, `grp_id`, `unit_id`, `date_created`, `created_by`) 
+        VALUES ('$username', '$username', '$pers_id', '$role', '$acnt', '$unit', NOW(), '$by')");
         
 
         if($feed){
@@ -291,11 +309,11 @@ else{
 
 }
 
-function getUserByOffice($office){
+function getUserByunit($unit){
     $conn = Database::getInstance();
     $db = $conn->getConnection();
 
-    $result=mysqli_query($db,"SELECT u.*,p.*,r.rank_title FROM user u join person p on u.person_id=p.person_id join rank r on p.rank_id=r.rank_id where u.office_id='$office' and u.grp_id<>4");
+    $result=mysqli_query($db,"SELECT u.*,p.*,r.rank_title FROM user u join person p on u.person_id=p.person_id join rank r on p.rank_id=r.rank_id where u.unit_id='$unit' and u.grp_id<>4");
 $count=mysqli_num_rows($result);
 // if ($count>=1){
 return $result;
@@ -329,11 +347,11 @@ return $result;
 
 }
 
-function getUserAdmin_id($office){
+function getUserAdmin_id($unit){
     $conn = Database::getInstance();
     $db = $conn->getConnection();
 
-    $result=mysqli_query($db,"SELECT u.*,p.*,r.rank_title FROM user u join person p on u.person_id=p.person_id join rank r on p.rank_id=r.rank_id where u.grp_id<>4 and u.office_id='$office'");
+    $result=mysqli_query($db,"SELECT u.*,p.*,r.rank_title FROM user u join person p on u.person_id=p.person_id join rank r on p.rank_id=r.rank_id where u.grp_id<>4 and u.unit_id='$unit'");
 $count=mysqli_num_rows($result);
 // if ($count>=1){
 return $result;
@@ -381,6 +399,17 @@ catch (PDOException $ex){
         ");
 
     }
+
+    function lastLogout($user){
+        $conn = Database::getInstance();
+        $db = $conn->getConnection();
+
+            // FLY payment
+        mysqli_query($db,"UPDATE `lms`.`user` SET `last_logout`=NOW() WHERE `user_id`='$user'
+        ");
+
+    }
+
 
     function resetPassword($pass,$user){
         $conn = Database::getInstance();
@@ -541,10 +570,182 @@ class lms_con{
         
         }
 
-        function post_letter(){
+        function post_letter($ref, $source, $sender, $l_date, $send_addr, $receiver_addr, $subject){
+            
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+                // $s_type=gettype($source);
+                // if($s_type=="string"){
+
+
+                // }
+                // else{
+                    
+                // }
+                $stat=mysqli_query($db,"INSERT INTO `letter` (`letter_subject`, `letter_ref`, `letter_source`, `sender`, `send_address`, `receiver_address`, `letter_date`, `date`) 
+                VALUES ('$subject','$ref','$source','$sender','$send_addr','$receiver_addr','$l_date', NOW())");
+                
+
+                // INSERT INTO `lms`.`letter` (`letter_subject`, `letter_ref`, `letter_source`, `sender`, `send_address`, `receiver_address`, `letter_date`, `date`) VALUES ('sub', 'ref', 'l_source', 'sender', 'send_addr', 'receiver_addr', 'l_date', 'now');
+
+                if($stat){
+                    $letter_id=mysqli_fetch_array(mysqli_query($db,"SELECT letter_id FROM letter ORDER BY letter_id DESC LIMIT 1"));
+                    $l_id=$letter_id["letter_id"];
+
+                    return $l_id;
+                }
+                else{
+                    echo "
+<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+    <strong>Hmmm!</strong> Something went wrong Letter was not Uploaded.
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+    </div>
+";
+                }
+
+                
+
+                
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+         echo $error;
+            }
 
         }
 
+
+        
+
+        function dispatch($letter_id,$source,$destination, $receiver){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+
+
+                //check if is already here 
+                $where=mysqli_query($db,"SELECT * FROM letter_flow WHERE `letter_id`='$letter_id' AND `to`='$source' AND `here`=1 ");
+                if(mysqli_num_rows($where)==1){
+                    echo "here";
+                    //leave unit 
+                    $redir=mysqli_query($db,"UPDATE `letter_flow` SET `here`= 0 WHERE `letter_id`='$letter_id' AND `to`='$source' AND `here`=1");
+                              if($redir){
+                                return "
+                                <div class='alert alert-info alert-dismissible fade show' role='alert'>
+                                    <strong>Great!</strong> We are good to go
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                      <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    </div>
+                                ";  
+                              }
+                              else{
+                                return "
+                                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                                    <strong>Great!</strong> Couldn't redir
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                      <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    </div>
+                                ";  
+                              }
+                }
+                //Not here 
+                else{
+                    echo "here1 ";
+                if($receiver==""){
+                    echo "no rec";
+                    $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`) 
+                    VALUES ('$letter_id','$source','$destination')");
+                }
+                else{
+                    echo " rec";
+                     //Attempt dispatch
+                    $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`, `receiver`) 
+                    VALUES ('$letter_id','$source','$destination','$receiver')");
+                }
+
+                if($dis){
+                    return "
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        <strong>Great!</strong> We are good to go
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+        </button>
+        </div>
+    ";
+                }
+                else{
+                    return "
+    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        <strong>Hmmmmm.....</strong> Something isn't right
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+          <span aria-hidden='true'>&times;</span>
+        </button>
+        </div>
+    ";
+                }
+
+                   
+                }
+                
+                    
+            
+
+
+
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+        }
+
+        function received($unit_id){
+
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+
+                $here=mysqli_query($db,"
+                select f.source  , f.receiver,l.letter_id, l.letter_subject , l.letter_ref as ref, l.letter_source as org_source, l.letter_date, f.date as flow_date
+                from letter_flow f join letter l 
+                on l.letter_id=f.letter_id
+                where des = '$unit_id' and here=1 and receiver is not null and signature is not null
+                ");
+
+                return $here;
+                
+            }
+
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        
+
     
     
     
@@ -553,6 +754,60 @@ class lms_con{
     
     
     
+    }
+
+
+/*..................................EXTRAS................................................*/
+    class extras{
+function get_user($id){
+    //search for actual user id of a typed name
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+
+                $da_id=mysqli_query($db,"SELECT user_id FROM users where userName ='$id';");
+                
+                if(mysqli_num_rows($da_id)==1){
+
+                    $user=mysqli_fetch_array($da_id);
+                    $da_unit=$user['user_id'];
+                    return $da_unit;
+                }
+
+                else{
+                    return $id;
+                }
+
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+        }
+
+
+
+        function right_user($id){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+
+                $da_id=mysqli_query($db,"SELECT user_id FROM users where userName ='$id' and status=1;");
+                
+                if(mysqli_num_rows($da_unit)==1){
+                    
+                    return $da_unit;
+                }
+                else{
+                    return $unit;
+                }
+
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+        }
     }
 
 ?>

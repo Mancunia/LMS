@@ -1,3 +1,44 @@
+body{
+    background-image: url("../image/gra.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  background-position: center;
+
+    /* background-color: rgba(0,0,0, 0.4); */
+}
+
+
+/* table tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  
+
+
+
 .nav_inlink{
    color: rgb(2, 2, 2); 
    padding-right: 100px;
@@ -52,12 +93,12 @@ top: 60px;
         
 }
 
-td :hover{
+/* td :hover{
     background-color: inherit;
         border: 1px inherit;
         -webkit-animation: mymove 1s ; /* Chrome, Safari, Opera */
         animation: mymove 1s ;
-}
+} */
 
 .anim{
     background-color: inherit;

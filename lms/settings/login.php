@@ -33,8 +33,8 @@ if($result['userName']==$_POST['user']&&$result['password']==$_POST['pass']){
 $_SESSION['user_id']=$result['user_id'];
 $_SESSION['role']=$result['role'];
 // $_SESSION['fname']=$result['fname'];
-$_SESSION['office']=$result['office_id'];
-$_SESSION['grp']=$result['grp_id'];
+$_SESSION['office']=$result['unit_id'];
+// $_SESSION['grp']=$result['grp_id'];
 $_SESSION['cred_1']=$result['username'];
 $_SESSION['cred_2']=$result['password'];
 $_SESSION['department']=$result['department_id'];

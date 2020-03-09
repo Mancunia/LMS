@@ -5,10 +5,16 @@ if(!isset($_SESSION["user_id"])){
   header("Location:settings/login.php");
 }
 
+echo    
+$_SESSION['user_id']." ".$_SESSION['role']." ".$_SESSION['office'];
+// $_SESSION['fname']=$result['fname'];
+
+
 require_once 'controllers/app.php';
 
 $app_user= new app_user();
 $lms_con = new lms_con();
+$extras= new extras();
 
 
 ?>

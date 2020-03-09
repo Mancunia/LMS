@@ -3,6 +3,8 @@
 
 
 include_once 'requires/header.php';
+$received=$lms_con->received($_SESSION['office']);
+
 
 
 
@@ -70,17 +72,47 @@ include_once 'requires/header.php';
                   </tr>
         </thead>
         <tbody>
-           
+            <?php
+
+            while($r=mysqli_fetch_array($received)){
+
+              echo '
+              <td>'.$r['letter_id'].'</td>
+                <td>'.$r['ref'].'</td>
+                <td>'.$r['letter_subject'].' </td>
+                <td>'.$r['source'].'</td>
+                <td>'.$r['flow_date'].'</td>
+              ';
+              
+              echo'<td>
+              <div class="tooltip"> <i class="fa fa-eye" aria-hidden="true"></i>
+  <div class="tooltiptext">
+  <div>
+  <div class="col.4">
+  <h3>'.$r['letter_id'].'</h3>
+  </div>
+  <div class="col.8">
+  Original Source:'.$r['org_source'].'
+  Letter Date:'.$r['letter_date'].'
+  Receiver:'.$r['receiver'].'
+  </div>
+  
+  </div>
+  </div>
+</div>
+
+              
+
+              </td>';
+
+            }
+
+            ?>
             <tr>
-                <td>1</td>
-                <td>Regional Director</td>
-                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Enim illo nihil maxime.
-                 Similique inventore, perspiciatis, molestias, consequuntur quo doloribus non architecto natus laudantium harum dolores quas dolorem nihil sint deserunt.
-                 </td>
-                <td>P&P</td>
-                <td>01/12/2020</td>
-                <th><a href="dispatch.php" class="btn btn-warning">Dispatch</a></th>
+                
+                
             </tr>
+
         </tbody>
         <tfoot>
         <tr>

@@ -1,11 +1,12 @@
 body{
-    background-image: url("../image/gra.png");
+    background-image: url("../images/gra.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
   background-position: center;
 
     /* background-color: rgba(0,0,0, 0.4); */
 }
+
 
 
 /* table tooltip */
@@ -67,14 +68,22 @@ background-color: rgba(0, 0, 0, 0.729);
     padding: 4px 20px 3px 20px;
   }
 
-.side{
 
-position: fixed;
+.side{
+    
+
+position: initial;
 top: 60px;
 
-
-
 }
+
+.aft_nav{
+    position: relative;
+       margin-top:55px;
+    width:10%;
+    
+}
+
 .links{
 
     margin-right: 50px;
@@ -97,7 +106,7 @@ top: 60px;
     background-color: inherit;
         border: 1px inherit;
         -webkit-animation: mymove 1s ; /* Chrome, Safari, Opera */
-        animation: mymove 1s ;
+        /* animation: mymove 1s ;
 } */
 
 .anim{

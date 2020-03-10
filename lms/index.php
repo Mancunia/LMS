@@ -73,37 +73,46 @@ $received=$lms_con->received($_SESSION['office']);
         </thead>
         <tbody>
             <?php
-
+            $n=1;
             while($r=mysqli_fetch_array($received)){
+              
+              $receiver=$extras->get_user($r['receiver']);
+              $unit=$extras->get_unit($r['source']);
+
+              $tool_tip='
+              Letter ID: '.$r['letter_id'].'
+              Original Source: '.$r['org_source'].'
+              Letter Date: '.$r['letter_date'].'
+              Receiver: '.$receiver.'
+              ';
 
               echo '
-              <td>'.$r['letter_id'].'</td>
+              <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
+              <td >'.$n.'</td>
                 <td>'.$r['ref'].'</td>
                 <td>'.$r['letter_subject'].' </td>
-                <td>'.$r['source'].'</td>
+                <td>'.$unit.'</td>
                 <td>'.$r['flow_date'].'</td>
               ';
               
               echo'<td>
-              <div class="tooltip"> <i class="fa fa-eye" aria-hidden="true"></i>
-  <div class="tooltiptext">
-  <div>
-  <div class="col.4">
-  <h3>'.$r['letter_id'].'</h3>
-  </div>
-  <div class="col.8">
-  Original Source:'.$r['org_source'].'
-  Letter Date:'.$r['letter_date'].'
-  Receiver:'.$r['receiver'].'
-  </div>
-  
-  </div>
-  </div>
-</div>
+              <div>
+               <a href="letter.php?letter='.$r['letter_id'].'"><i class="fa fa-eye" aria-hidden=""></i>
+               
+               </a>
+               
+               <a href="dispatch.php?letter='.$r['letter_id'].'"><i class="fa fa-share" aria-hidden="true"></i>
+               
+               </a>
+              </div>
+              
 
               
 
-              </td>';
+              </td>
+              
+              </tr>';
+              $n++;
 
             }
 

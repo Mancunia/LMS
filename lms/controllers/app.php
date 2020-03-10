@@ -728,6 +728,50 @@ class lms_con{
         }
 
 
+        function getLetter($id){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+
+                 $here=mysqli_query($db,"
+               select l.letter_id, l.letter_subject, l.letter_ref, u.unit_name, l.sender, l.send_address, l.receiver_address, l.letter_date from letter l
+                join unit u 
+                on l.letter_source=u.unit_id
+                where l.letter_id='$id'
+                ");
+                if($here){
+
+                    return $here;
+                }
+                else{
+                     return "
+                     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                                    <strong>OOPs!</strong> This is unsual no <b>Letter</b>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                      <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    </div>
+                     
+                     ";
+                }
+
+               
+
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+
+        }
+
+
+        function getLetter_flow($id){
+
+
+        }
+
+
 
 
 
@@ -765,7 +809,7 @@ function get_user($id){
                 $conn = Database::getInstance();
                 $db = $conn->getConnection();
 
-                $da_id=mysqli_query($db,"SELECT user_id FROM users where userName ='$id';");
+                $da_id=mysqli_query($db,"SELECT user_id FROM users where userName ='$id'");
                 
                 if(mysqli_num_rows($da_id)==1){
 
@@ -775,7 +819,14 @@ function get_user($id){
                 }
 
                 else{
-                    return $id;
+                    $da_id=mysqli_query($db,"SELECT userName FROM users where user_id ='$id'");
+                
+                    if(mysqli_num_rows($da_id)==1){
+    
+                        $user=mysqli_fetch_array($da_id);
+                        $da_unit=$user['userName'];
+                        return $da_unit;
+                    }
                 }
 
             }
@@ -783,6 +834,34 @@ function get_user($id){
                 $error = $e->getMessage();
                 echo $error;
             }
+        }
+
+        function get_unit($id){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+
+                $da_id=mysqli_query($db,"SELECT unit_name FROM unit where unit_id ='$id'");
+                
+                if(mysqli_num_rows($da_id)==1){
+
+                    $unit=mysqli_fetch_array($da_id);
+                    $da_unit=$unit['unit_name'];
+
+                    return $da_unit;
+                }
+
+                else{
+                    return "Not a valid unit since it wasn't found";
+                }
+
+            
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+
         }
 
 

@@ -37,7 +37,7 @@ $feed_msg="";
       echo "des";
        foreach($_POST['destination'] as $selected){
         echo "des";
-        $feed_msg=$lms_con->dispatch($letter,$_POST['source'],$selected);
+        $feed_msg=$lms_con->dispatch($letter,$_POST['source'],$selected,"");
 
       // echo $selected."</br>";
   

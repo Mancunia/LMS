@@ -1,6 +1,6 @@
  <!-- Sidebar -->
- <ul class="sidebar navbar-nav ">
-<div class="side">
+ <ul class="sidebar navbar-nav aft_nav">
+<div class="side ">
   <!-- <li class="nav-item active">
         <a class="nav-link" href="index.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>

@@ -69,18 +69,21 @@ background-color: rgba(0, 0, 0, 0.729);
   }
 
 
-.side{
+  .side{
+
+    position: fixed;
+    top: 60px;
+    margin-left: 10px;
+    max-height: 100%;
+    overflow-x: none;
     
-
-position: initial;
-top: 60px;
-
-}
+    }
 
 .aft_nav{
     position: relative;
        margin-top:55px;
     width:10%;
+    bottom: 0;
     
 }
 

@@ -22,7 +22,7 @@ $feed_msg="";
     //  $from=$_POST['source'];
 
     echo $_POST['ref']." " .$_POST['source']." " .$_POST['sender']." " . $_POST['letter_date']." " . $_POST['send_addr']." " . $_POST['receive_addr']." " . $_POST['subject'];
-    if(!isset($_POST['sender'])){
+    if(($_POST['sender']=="")){
       $sender=$_POST['source'];
     }
     else{
@@ -37,7 +37,7 @@ $feed_msg="";
       echo "des";
        foreach($_POST['destination'] as $selected){
         echo "des";
-        $feed_msg=$lms_con->dispatch($letter,$_POST['source'],$selected,"");
+        $feed_msg=$lms_con->dispatch($letter,$_POST['source'],$selected,"",$sender);
 
       // echo $selected."</br>";
   
@@ -46,7 +46,7 @@ $feed_msg="";
      }
      else{
         echo "no des";
-      $feed_msg=$lms_con->dispatch($letter,$_POST['source'],$_SESSION['office'], $_SESSION['user_id']);
+      $feed_msg=$lms_con->dispatch($letter,$_POST['source'],$_SESSION['office'], $_SESSION['user_id'],$sender);
 
      }
 
@@ -79,7 +79,7 @@ $feed_msg="";
 <div class="row">
 
   <div class="col-4">
-Reference:<input class="form-control" type="text" name="ref" >
+Reference:<input class="form-control" type="text" name="ref" placeholder="Reference"id="inputReference" >
   </div>
    <div class="col-4">
 Source: <!--<div id="source1"> -->
@@ -120,36 +120,29 @@ Source: <!--<div id="source1"> -->
 
 <div class="col-6 ">
 Sender Address:
-<textarea name="send_addr" id="" cols="5" rows="3" class="form-control"></textarea>
+<textarea name="send_addr" id="" cols="5" rows="3" placeholder="Sender address" class="form-control"></textarea>
 </div>
 
 <div class="col-6 ">
 Receiver Address:
-<textarea name="receive_addr" id="" cols="5" rows="3" class="form-control"></textarea>
+<textarea name="receive_addr" id="" cols="5" rows="3" placeholder="Receiver address" class="form-control"></textarea>
 </div>
 
 </div>
-
+<hr>
  <div class="row">
-<div class="col-12">
-  Subject: <textarea name="subject" id="" class="form-control" cols="30" rows="5">
+<div class="col-6">
+  Subject: <textarea name="subject" id="" class="form-control" placeholder="Subject" cols="30" rows="5">
 
   </textarea>
 </div>
-
- </div>
-
-
-<hr>
-
-<!-- from and to -->
-<div class="row">
-
-  <div class="col-6">
+<div class="col-6">
+<div class="">
 Sender:
-<input class="form-control" type="text" name="sender" >
+<input class="form-control" type="text" placeholder="Sender" name="sender" >
   </div>
-   <div class="col-6">
+
+<div class="">
 Destination: <br>
 <select class="selectpicker form-control" name="destination[]" data-live-search="true" data-actions-box="true" multiple>
   <optgroup label="Units">
@@ -166,6 +159,19 @@ while($u=mysqli_fetch_array($unit)){
   </optgroup>
 </select>
    </div>
+
+</div>
+
+ </div>
+
+
+<hr>
+
+<!-- from and to -->
+<div class="row">
+
+  
+   
 </div>
 <br>
 

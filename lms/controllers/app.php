@@ -365,6 +365,13 @@ return $result;
 // header ("Location:./index.php");
 
 }
+// function getUsers($id){
+//     $conn = Database::getInstance();
+//     $db = $conn->getConnection();
+
+//     $result=mysqli_query($db,"select * from users where user_id='$id'");
+//     return $result;
+// }
 
 
     /*
@@ -395,7 +402,7 @@ catch (PDOException $ex){
         $db = $conn->getConnection();
 
             // FLY payment
-        mysqli_query($db,"UPDATE `lms`.`user` SET `last_login`=NOW() WHERE `user_id`='$user'
+        mysqli_query($db,"UPDATE `lms`.`users` SET `last_login`=NOW() WHERE `user_id`='$user'
         ");
 
     }
@@ -405,7 +412,7 @@ catch (PDOException $ex){
         $db = $conn->getConnection();
 
             // FLY payment
-        mysqli_query($db,"UPDATE `lms`.`user` SET `last_logout`=NOW() WHERE `user_id`='$user'
+        mysqli_query($db,"UPDATE `lms`.`users` SET `last_logout`=NOW() WHERE `user_id`='$user'
         ");
 
     }
@@ -415,7 +422,7 @@ catch (PDOException $ex){
         $conn = Database::getInstance();
         $db = $conn->getConnection();
 
-        mysqli_query($db,"UPDATE `lms`.`user` SET `password`='$pass' WHERE `user_id`='$user'
+        mysqli_query($db,"UPDATE `lms`.`users` SET `password`='$pass' WHERE `user_id`='$user'
         ");
         echo"
         <div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -468,7 +475,7 @@ catch (PDOException $ex){
         $db = $conn->getConnection();
 
             // Dea
-        mysqli_query($db,"UPDATE `lms`.`user` SET `status`='0' WHERE `user_id`='$userid'
+        mysqli_query($db,"UPDATE `lms`.`users` SET `status`='0' WHERE `user_id`='$userid'
         ");
    
 return "
@@ -496,7 +503,7 @@ return "
             $db = $conn->getConnection();
 
             // activate
-        mysqli_query($db,"UPDATE `lms`.`user` SET `status`='1' WHERE `user_id`='$userid'
+        mysqli_query($db,"UPDATE `lms`.`users` SET `status`='1' WHERE `user_id`='$userid'
         ");
    
 return "
@@ -620,19 +627,58 @@ class lms_con{
 
         
 
-        function dispatch($letter_id,$source,$destination, $receiver){
+        function dispatch($letter_id,$source,$destination, $receiver,$sender){
             try{
                 $conn = Database::getInstance();
                 $db = $conn->getConnection();
 
 
                 //check if is already here 
-                $where=mysqli_query($db,"SELECT * FROM letter_flow WHERE `letter_id`='$letter_id' AND `to`='$source' AND `here`=1 ");
-                if(mysqli_num_rows($where)==1){
-                    echo "here";
+                $where=mysqli_query($db,"SELECT * FROM letter_flow WHERE `letter_id`='$letter_id' AND `des`='$source' AND `here`=1 ");
+                $n=mysqli_num_rows($where);
+                if($n==1){
+
+                    // echo "here";
                     //leave unit 
-                    $redir=mysqli_query($db,"UPDATE `letter_flow` SET `here`= 0 WHERE `letter_id`='$letter_id' AND `to`='$source' AND `here`=1");
+                    $redir=mysqli_query($db,"UPDATE `letter_flow` SET `here`= 0 WHERE `letter_id`='$letter_id' AND `des`='$source' AND `here`=1");
                               if($redir){
+                                //   echo " left here";
+
+                                if($receiver==""){
+                                // echo "no rec";
+                                $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`,`sender`) 
+                                VALUES ('$letter_id','$source','$destination','$sender')");
+                                    }   
+                                else{
+                                    // echo " rec";
+                                    // echo $letter_id." ".$source." ".$destination." ".$receiver;
+                                     //Attempt dispatch
+                                    $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`,`sender`, `receiver`) 
+                                    VALUES ('$letter_id','$source','$destination','$sender','$receiver')");
+                                }
+                            
+                                if($dis){
+                                    return "
+                                <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                                <strong>Great!</strong> We are good to go
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                  <span aria-hidden='true'>&times;</span>
+                                </button>
+                                </div>
+                                        ";
+                                        }
+                                        else{
+                                            return "
+                                <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                                <strong>Hmmmmm.....</strong> Something isn't right
+                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                  <span aria-hidden='true'>&times;</span>
+                                </button>
+                                </div>
+                                            ";
+                                            }
+                    
+
                                 return "
                                 <div class='alert alert-info alert-dismissible fade show' role='alert'>
                                     <strong>Great!</strong> We are good to go
@@ -645,27 +691,28 @@ class lms_con{
                               else{
                                 return "
                                 <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                                    <strong>Great!</strong> Couldn't redir
+                                    <strong>Attention!</strong> Couldn't redir
                                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                       <span aria-hidden='true'>&times;</span>
                                     </button>
                                     </div>
                                 ";  
                               }
-                }
-                //Not here 
+
+                            
+                }                 
                 else{
                     echo "here1 ";
                 if($receiver==""){
-                    echo "no rec";
-                    $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`) 
-                    VALUES ('$letter_id','$source','$destination')");
+                    // echo "no rec";
+                    $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`,`sender`) 
+                    VALUES ('$letter_id','$source','$destination','$sender')");
                 }
                 else{
-                    echo " rec";
+                    // echo " rec";
                      //Attempt dispatch
-                    $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`, `receiver`) 
-                    VALUES ('$letter_id','$source','$destination','$receiver')");
+                    $dis=mysqli_query($db,"INSERT INTO `letter_flow` (`letter_id`, `source`, `des`,`sender`, `receiver`) 
+                    VALUES ('$letter_id','$source','$destination','$sender','$receiver')");
                 }
 
                 if($dis){
@@ -704,7 +751,7 @@ class lms_con{
             }
         }
 
-        function received($unit_id){
+        function getReceived($unit_id){
 
             try{
                 $conn = Database::getInstance();
@@ -744,7 +791,7 @@ class lms_con{
                     return $here;
                 }
                 else{
-                     return "
+                     echo "
                      <div class='alert alert-danger alert-dismissible fade show' role='alert'>
                                     <strong>OOPs!</strong> This is unsual no <b>Letter</b>
                                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
@@ -765,40 +812,87 @@ class lms_con{
 
         }
 
+        function postDispatching($id){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
 
-        function getLetter_flow($id){
+                $result=mysqli_query($db,"select lf.letter_flow_id,lf.des,lf.date as flow_date,l.letter_subject,l.letter_id, l.letter_source as org_source, l.letter_ref as ref,l.letter_date,u.unit_name
+                from letter_flow lf join letter l
+                on lf.letter_id=l.letter_id join unit u
+                on u.unit_id=lf.source
+                where lf.source='$id' and lf.here=1 and lf.receiver is null and lf.signature is null ");
+
+                 if($result){
+                     return $result;
+                 }
+                 else{
+                     echo "
+                     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                                    <strong>OOPs!</strong> This is unsual no <b>Letter</b>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                      <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    </div>
+                     ";
+                 }
 
 
+
+                
+            }
+            
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+
+        }
+
+        function getDispatch($id){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+                $result=mysqli_query($db,"select lf.letter_flow_id,lf.des,lf.date as flow_date,lf.source,lf.sender,l.letter_id, l.letter_subject, l.letter_ref, l.send_address, l.receiver_address, l.letter_date,u.unit_name
+                from letter_flow lf join letter l
+                on lf.letter_id=l.letter_id join unit u
+                on u.unit_id=lf.source where lf.letter_flow_id='$id'");
+                if($result){
+                    return $result;
+                }
+                else{
+                    echo "
+                    <script>
+                    alert('Something isn't right');
+                    </script>
+                    ";
+                }
+                
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
         }
 
 
 
+        function getLetter_flow($id){
 
 
+        } 
 
 
+ 
 
-
-
-
-
-
-
-
-
-        
-
-        
-
-    
-    
-    
-    
-    
-    
-    
     
     }
+
+
+
+
+
+
 
 
 /*..................................EXTRAS................................................*/

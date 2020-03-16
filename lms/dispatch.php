@@ -1,4 +1,5 @@
 <?php
+$feed_msg="";
 
 
 
@@ -14,6 +15,7 @@ if(isset($_GET['letter'])){
   $subject=$letter['letter_subject'];
   $date=$letter['letter_date'];
   $source=$letter['unit_name'];
+  $letter_id=$letter['letter_id'];
 
   $unit=$app_user->exMyunit($_SESSION['office']);
 
@@ -21,6 +23,29 @@ if(isset($_GET['letter'])){
 
 else{
 
+}
+
+if(isset($_POST['dispatch'])){
+  if(!isset($_POST['destination'])){
+
+    $feed_msg="<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+    <strong>Attention!</strong> No destination selected
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+    </div>";
+  }
+  else{
+      foreach($_POST['destination'] as $selected){
+      
+      $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$selected,$_POST['receiver'],$_SESSION['user_id']);
+
+        }
+
+      }
+  
+    
+    
 }
 
 
@@ -33,7 +58,7 @@ else{
    <?php
 
    include_once 'requires/heading.php';
-
+echo $feed_msg;
    ?>
 
 <!-- letter itself -->
@@ -151,7 +176,7 @@ else{
 
 <div class="col-md-9 card " style="width:80rem;">
 
-<form action="" class="form-group">
+<form action="" class="form-group" method="post">
 <div class="row">
  <div class="col-6">
  From: <input type="text" class="form-control" readonly value="<?php echo $extras->get_unit($_SESSION['office']) ?>">
@@ -178,12 +203,12 @@ while($u=mysqli_fetch_array($unit)){
 <hr>
 <div class="row">
 <div class="col-6">
-Receiver: <input type="text" class="form-control">
+Receiver: <input type="text" class="form-control" name="receiver">
 </div>
 </div>
 <br>
 <div class="row">
-Signature: <canvas id="signature-pad" class="sign_canvas"  style="border:1px solid #000000; border-radius:5px; width:100%; height:50%;">
+Signature: <canvas id="signature-pad" class="sign_canvas" name="signature"  style="border:1px solid #000000; border-radius:5px; width:100%; height:50%;">
 </canvas>
 </div>
 
@@ -196,11 +221,11 @@ Signature: <canvas id="signature-pad" class="sign_canvas"  style="border:1px sol
 <div class="row">
 
 <div class="col-6">
-<a href="index.php" class="btn btn-danger btn-lg">Cancel</a>
+<a href="index.php" class="btn btn-danger btn-lg"><i class="fa fa-times" aria-hidden="true"><span class="icon_text">Cancel</span></i></a>
 </div>
 
 <div class="col-6">
-<button class="btn btn-success btn-lg" type="submit">Attempt Dispatch</button>
+<button class="btn btn-success btn-lg" type="submit" name="dispatch"><i class="fa fa-check" aria-hidden="true"><span class="icon_text">Dispatch</span></i></button>
 </div>
 
 </div>

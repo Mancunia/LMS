@@ -6,6 +6,8 @@ include_once 'requires/header.php';
 $received=$lms_con->getReceived($_SESSION['office']);
 $dispatching=$lms_con->postDispatching($_SESSION['office']);
 
+$no_received=mysqli_num_rows($received);
+$no_dispatching=mysqli_num_rows($dispatching);
 
 
 
@@ -46,42 +48,51 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
    <!--........................Modal.............................-->
 
        <?php
-       include_once 'includes/cards.php';
+      //  include_once 'includes/cards.php';
        ?>
 
 
-      <!-- .................................................................................... -->
 
-  
+<div class="container my-4">
+      
+            <!-- Description -->
+      
+            <!-- Section: Live preview -->
+            <section>
+      
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item waves-effect waves-light">
+                  <a class="nav-link btn btn-lg active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">
+                  <i class="fa fa-arrow-down"></i>Received
+                  <span class="badge badge-info">
+                  <?php echo $no_received; ?>
+                  </span>
+                  </a>
+                </li>
 
+                <li class="nav-item waves-effect waves-light">
+                  <a class="nav-link btn btn-lg " id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                  <i class="fa fa-history"></i>Dispatching
+                  <span class="badge badge-primary">
+                  <?php echo $no_dispatching; ?>
+                  </span>
+                  </a>
+                </li>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12"> 
-      <!-- Nav tabs -->
-      <div class="">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active nav_inlink"><a class=" btn btn-outline-primary" href="#received" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-arrow-down"></i>  <span>Received</span></a></li>
-          <li role="presentation" class="nav_inlink "><a class=" btn btn-outline-warning" href="#dispatching" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-history"></i>  <span>Dispatching</span></a></li>
-          <li role="presentation" class="nav_inlink "><a class=" btn btn-outline-success" href="#dispatched" aria-controls="messages" role="tab" data-toggle="tab"><i class="fa fa-arrow-up"></i>  <span>Dispatched</span></a></li>
-          
-        </ul>
+                <li class="nav-item waves-effect waves-light">
+                  <a class="nav-link btn btn-lg " id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">
+                  <i class="fa fa-arrow-up"></i>Dispatched
+                  <span class="badge badge-success">0</span>
+                  </a>
+                </li>
 
-        
+              </ul>
+              <div class="tab-content" id="myTabContent">
 
-        <!-- Tab panes -->
-        <div class="tab-content">
-
- <!-- ............................received................................... -->
-          <div role="tabpanel" class="tab-pane active" id="received">
-            
-          <div class="card mb-3">
-          <div class="card-header bg-primary" id="received">
-            <i class="fas fa-arrow-down"></i>
-            Received</div>
-          <div class="card-body">
-            <div class="table-responsive">
-      <table id="" class="display table table-hover" style="width:100%">
+                <div class="tab-pane active fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <!--Received -->
+                <div class="card mb-3">
+                <table id="" class="display table table-hover" style="width:100%">
         <thead>
         <tr>
                     <th>S/N</th>
@@ -157,22 +168,14 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
                   </tr>
         </tfoot>
     </table>
-</div>
-</div>
-</div>
+               </div>   
+                  </div>
 
-          </div>
 
-<!-- ............................dispatching................................... -->
-          <div role="tabpanel" class="tab-pane" id="dispatching">
-           
-          <div class="card mb-3">
-          <div class="card-header bg-warning" id="dispatching">
-            <i class="fas fa-history"></i>
-            Dispatching</div>
-          <div class="card-body">
-            <div class="table-responsive">
-    <table id="" class="display table table-hover" style="width:100%">
+                <div class="tab-pane  fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <!--Dispatching -->
+                <div class="card mb-3">
+                <table id="" class="display table table-hover" style="width:100%">
         <thead>
         <tr>
                     <th>S/N</th>
@@ -180,11 +183,12 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
                     <th>Subject</th>
                     <th>To</th>
                     <th>Date</th>
+                    <th>Action</th>
                     
                   </tr>
         </thead>
         <tbody>
-
+        <div id="dis_table">
         <?php
             $n=1;
             while($r=mysqli_fetch_array($dispatching)){
@@ -209,7 +213,7 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
               ';
               
               echo'<td>
-              <div>
+              <div class="">
                <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
                
                </a>
@@ -231,6 +235,9 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
             }
 
             ?>
+        </div>
+
+        
 
             
            
@@ -242,27 +249,19 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
                     <th>Subject</th>
                     <th>To</th>
                     <th>Date</th>
+                    <th>Action</th>
                     
                   </tr>
         </tfoot>
     </table>
-    </div>
-</div>
-</div>
- 
+                 </div> 
+                  </div>
 
-          </div>
 
-<!-- ............................dispatched................................... -->
-          <div role="tabpanel" class="tab-pane" id="dispatched">
-
-           <div class="card mb-3">
-          <div class="card-header bg-success" id="dispatched">
-            <i class="fas fa-arrow-up"></i>
-            Dispatched</div>
-          <div class="card-body">
-            <div class="table-responsive">
-      <table id="" class="display table table-hover" style="width:100%">
+                <div class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <!--Dispatched -->
+                <div class="card mb-3">
+                <table id="" class="display table table-hover" style="width:100%">
         <thead>
         <tr>
                     <th>S/N</th>
@@ -294,19 +293,24 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
                   </tr>
         </tfoot>
     </table>
-</div>
-</div>
-</div> 
-
-          </div>
-
-
-          
-        </div>
-      </div>
     </div>
-  </div>
-</div>
+                
+                  
+                  </div>
+              </div>
+      
+            </section>
+            <!-- Section: Live preview -->
+      
+          </div>
+      
+
+      <!-- .................................................................................... -->
+
+  
+
+
+
 
 
       
@@ -314,10 +318,14 @@ $dispatching=$lms_con->postDispatching($_SESSION['office']);
 
       <!-- /.container-fluid -->
 
+
 <script>
+
+var id;
+var str;
 function getDispatch(str){
-    console.log(str);
-    console.log('haha');
+    // console.log(str);
+    // console.log('haha');
     if (str == "") {
         document.getElementById("txtHint").innerHTML = "";
         return;
@@ -334,9 +342,49 @@ function getDispatch(str){
                 document.getElementById("form").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET","ajax/getDispatching.php?dispatch_id="+str,true);
+        xmlhttp.open("GET","ajax/controller.php?dispatch_id="+str,true);
         xmlhttp.send();
     }
+}
+
+function updateDispatch(){
+  
+  var office='<?php echo $_SESSION['office']; ?>';
+  var receiver = document.forms["dispatch_form"]["receiver"].value;
+
+  if(receiver==""){
+    document.getElementById("re_ce").setAttribute("class","badge badge-danger badge-pill");
+  document.getElementById("re_ce").innerHTML="please enter a receiver";
+  return 0;
+  }
+  else{
+    var office='<?php echo $_SESSION['office']; ?>';
+    var lf_id = document.forms["myForm"]["letter_id"].value;
+
+      if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  do{
+                    document.getElementById("dis_table").innerHTML="Please wait";
+
+                  }
+                  while(this.responseText=="");
+
+                    document.getElementById("dis_table").innerHTML = this.responseText;
+                }
+            };
+
+            xmlhttp.open("GET","ajax/update.php?update="+lf_id+"&receiver="+receiver+"&office="+office,true);
+
+
+  }
+  
 }
 </script>
       <!-- Sticky Footer -->

@@ -875,9 +875,53 @@ class lms_con{
             }
         }
 
+        function updateLetter_flow($id,$receiver){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver' `signature`='sign' WHERE `letter_flow_id`='$id'
+                ");
+                if($result){
+                   return $id;
+                }
+                else{
+                    echo "<script>
+                    alert('Letter dispatch wasn't successful!');
+                    </script>";
+                }
+            
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+
+        }
 
 
-        function getLetter_flow($id){
+
+        function getLetter_flow($id,$receiver){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='some' WHERE `letter_flow_id`='$id'
+                ");
+                if(!result){
+                    echo"
+                    <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                    <strong>OOPs!</strong> This is unsual
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                    </div>
+                    ";
+                }
+
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
 
 
         } 

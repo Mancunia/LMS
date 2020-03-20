@@ -23,7 +23,7 @@ $r_addr=$l['receiver_address'];
 
     echo'
 
-    <form action="" method="GET" class="form-group">
+    <form action="" name="dispatch_form"  class="form-group" onsubmit="updateDispatch()">
     
     <div class="container" style="margin-left:10px;">
     <div class="row col-md-12">
@@ -125,6 +125,7 @@ $r_addr=$l['receiver_address'];
         <div class="col-md-6">
         <label for="receiver" class="">Receiver</label>
         <input type="text" name="receiver" class="form-control">
+        <span id="re_ce"></span>
         </div>
         
     </div>
@@ -141,12 +142,14 @@ $r_addr=$l['receiver_address'];
 
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a type="button" class="btn btn-primary" href="index.php?dispatch='.$lf_id.'">Dispatch</a>
+        <button type="submit" name="letter_id" class="btn btn-primary" value="'.$lf_id.'">Dispatch</button>
       </div>
         </form>
 
     ';
 }
+
+
 
 
 

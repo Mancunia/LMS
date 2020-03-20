@@ -118,7 +118,7 @@ echo $feed_msg;
 
     <div class="row container">
 
-        <div class="col-4 row">
+        <div class="col-4 ">
           <?php
         echo '
          Sender: <b>'.$sender.'</b>
@@ -127,7 +127,7 @@ echo $feed_msg;
         ?>
         </div>
 
-        <div class="col-4 row">
+        <div class="col-4 ">
           Reference:<?php
         echo '
         <div class="">
@@ -137,7 +137,7 @@ echo $feed_msg;
         ?>
         </div>
         
-        <div class="col-4 row">
+        <div class="col-4">
            Date:<?php
         echo '
         <div class="">

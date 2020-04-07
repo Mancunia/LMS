@@ -4,6 +4,22 @@ $lms_con = new lms_con();
 $extras= new extras();
 
 // $dispatch_id=$_REQUEST['dispatch_id'];
+
+if(isset($_GET['dispatching']) && isset($_GET['receiver'])){
+  echo"<script>
+  alert('in da update');
+  </script>";
+  $receiver= $_GET['receiver'];
+  $l_id=$_GET['dispatching'];
+   $lms_con->updateLetter_flow($l_id,$receiver);
+   header("Location:../index.php#profile");
+}
+
+
+
+
+
+
 if(isset($_GET['dispatch_id'])){
     $result=$lms_con->getDispatch($_GET['dispatch_id']);
 
@@ -23,7 +39,7 @@ $r_addr=$l['receiver_address'];
 
     echo'
 
-    <form action="" name="dispatch_form"  class="form-group" onsubmit="updateDispatch()">
+    <form action="" name="dispatch_form"  class="form-group" >
     
     <div class="container" style="margin-left:10px;">
     <div class="row col-md-12">
@@ -89,6 +105,7 @@ $r_addr=$l['receiver_address'];
 
 
       </div>
+      <input hidden name="l_id" value="'.$lf_id.'" >
 
 
 
@@ -124,7 +141,7 @@ $r_addr=$l['receiver_address'];
 
         <div class="col-md-6">
         <label for="receiver" class="">Receiver</label>
-        <input type="text" name="receiver" class="form-control">
+        <input type="text" name="receiver" id="receiver" class="form-control">
         <span id="re_ce"></span>
         </div>
         
@@ -142,7 +159,7 @@ $r_addr=$l['receiver_address'];
 
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" name="letter_id" class="btn btn-primary" value="'.$lf_id.'">Dispatch</button>
+        <button type="button" class="btn btn-primary fa-pull-right" value="'.$lf_id.'" onclick="updateDispatch(this.value)">Dispatch</button>
       </div>
         </form>
 

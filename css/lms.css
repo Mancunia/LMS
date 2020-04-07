@@ -71,11 +71,12 @@ background-color: rgba(0, 0, 0, 0.729);
 
   .side{
 
-    position: fixed;
+    /* position: fixed; */
     top: 60px;
     margin-left: 10px;
-    max-height: 100%;
-    overflow-x: none;
+    max-height: 650px;
+    overflow-x: hidden;
+    overflow-y: auto;
     
     }
 

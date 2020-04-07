@@ -41,8 +41,9 @@
   
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="../vendor/jquery/jquery.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  <script src="https://developers.google.com/speed/libraries#jquery"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   
   <!-- Latest compiled and minified JavaScript -->
@@ -55,10 +56,10 @@
 
 
   <!-- Core plugin JavaScript-->
-  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- <script src="../vendor/jquery-easing/jquery.easing.min.js"></script> -->
 
   <!-- Page level plugin JavaScript-->
-  <script src="../vendor/chart.js/Chart.min.js"></script>
+  <!-- <script src="../vendor/chart.js/Chart.min.js"></script> -->
   <script src="../vendor/datatables/jquery.dataTables.js"></script>
   <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
   <script src="../vendor/datatables/dataTables.bootstrap4.js"></script>
@@ -68,19 +69,21 @@
   <script src="../js/lms.js"></script>
 
   <!-- Demo scripts for this page-->
-  <script src="../js/demo/datatables-demo.js"></script>
-  <script src="../js/demo/chart-area-demo.js"></script>
+  <!-- <script src="../js/demo/datatables-demo.js"></script>
+  <script src="../js/demo/chart-area-demo.js"></script> -->
 
   <!-- AJAX controller-->
-  <script src="../ajax/controller.js">
+  <!-- <script src="../ajax/controller.js"> -->
   
   </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <!-- raw JS -->
   <script>
 
   $(document).ready(function() {
-    $('table.display').DataTable();
+    
 } );
 
   </script>

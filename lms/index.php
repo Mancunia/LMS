@@ -11,6 +11,12 @@ $no_dispatching=mysqli_num_rows($dispatching);
 
 
 
+
+// if(isset($_GET['l_id'])&isset($_GET['src'])&isset($_GET['des'])& isset($_GET['sender'])&isset($_GET['receiver'])){
+//   $lms_con->updateLetter_flow($_GET['l_id'],$_GET['receiver']);
+// }
+
+
 ?>
 
 
@@ -62,7 +68,7 @@ $no_dispatching=mysqli_num_rows($dispatching);
       
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item waves-effect waves-light">
-                  <a class="nav-link btn btn-lg active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">
+                  <a class="nav-link btn btn-lg active" id="home-tab" data-toggle="tab" href="#received" role="tab" aria-controls="home" aria-selected="false">
                   <i class="fa fa-arrow-down"></i>Received
                   <span class="badge badge-info">
                   <?php echo $no_received; ?>
@@ -71,7 +77,7 @@ $no_dispatching=mysqli_num_rows($dispatching);
                 </li>
 
                 <li class="nav-item waves-effect waves-light">
-                  <a class="nav-link btn btn-lg " id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                  <a class="nav-link btn btn-lg " id="profile-tab" data-toggle="tab" href="#dispatching" role="tab" aria-controls="profile" aria-selected="false">
                   <i class="fa fa-history"></i>Dispatching
                   <span class="badge badge-primary">
                   <?php echo $no_dispatching; ?>
@@ -80,7 +86,7 @@ $no_dispatching=mysqli_num_rows($dispatching);
                 </li>
 
                 <li class="nav-item waves-effect waves-light">
-                  <a class="nav-link btn btn-lg " id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">
+                  <a class="nav-link btn btn-lg " id="contact-tab" data-toggle="tab" href="#dispatched" role="tab" aria-controls="contact" aria-selected="true">
                   <i class="fa fa-arrow-up"></i>Dispatched
                   <span class="badge badge-success">0</span>
                   </a>
@@ -89,7 +95,7 @@ $no_dispatching=mysqli_num_rows($dispatching);
               </ul>
               <div class="tab-content" id="myTabContent">
 
-                <div class="tab-pane active fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane active fade show" id="received" role="tabpanel" aria-labelledby="home-tab">
                 <!--Received -->
                 <div class="card mb-3">
                 <table id="" class="display table table-hover" style="width:100%">
@@ -172,7 +178,7 @@ $no_dispatching=mysqli_num_rows($dispatching);
                   </div>
 
 
-                <div class="tab-pane  fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane  fade" id="dispatching" role="tabpanel" aria-labelledby="profile-tab">
                 <!--Dispatching -->
                 <div class="card mb-3">
                 <table id="" class="display table table-hover" style="width:100%">
@@ -258,7 +264,7 @@ $no_dispatching=mysqli_num_rows($dispatching);
                   </div>
 
 
-                <div class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="tab-pane fade " id="dispatched" role="tabpanel" aria-labelledby="contact-tab">
                 <!--Dispatched -->
                 <div class="card mb-3">
                 <table id="" class="display table table-hover" style="width:100%">
@@ -320,7 +326,7 @@ $no_dispatching=mysqli_num_rows($dispatching);
 
 
 <script>
-
+// $(document).ready(function(){
 var id;
 var str;
 function getDispatch(str){
@@ -346,20 +352,19 @@ function getDispatch(str){
         xmlhttp.send();
     }
 }
+// });
 
-function updateDispatch(){
+function updateDispatch(str){
   
-  var office='<?php echo $_SESSION['office']; ?>';
-  var receiver = document.forms["dispatch_form"]["receiver"].value;
+  var receiver = document.getElementById("receiver").value;
 
   if(receiver==""){
     document.getElementById("re_ce").setAttribute("class","badge badge-danger badge-pill");
   document.getElementById("re_ce").innerHTML="please enter a receiver";
-  return 0;
   }
   else{
     var office='<?php echo $_SESSION['office']; ?>';
-    var lf_id = document.forms["myForm"]["letter_id"].value;
+    var lf_id = str;
 
       if (window.XMLHttpRequest) {
                 // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -375,18 +380,32 @@ function updateDispatch(){
 
                   }
                   while(this.responseText=="");
+                  console.log("responds");
 
                     document.getElementById("dis_table").innerHTML = this.responseText;
                 }
+                else{
+                  console.log("No responds");
+                }
             };
 
-            xmlhttp.open("GET","ajax/update.php?update="+lf_id+"&receiver="+receiver+"&office="+office,true);
+            xmlhttp.open("GET","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver,true);
+            console.log("request sent");
 
 
   }
   
 }
 </script>
+
+<!-- <script>
+
+
+alert("hello world");
+
+});
+
+</script> -->
       <!-- Sticky Footer -->
      <?php
      require_once 'requires/footer.php';

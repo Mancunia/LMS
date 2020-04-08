@@ -375,24 +375,27 @@ function updateDispatch(str){
             }
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  do{
-                    document.getElementById("dis_table").innerHTML="Please wait";
-
-                  }
-                  while(this.responseText=="");
+                  // do{
+                  //   document.getElementById("dis_table").innerHTML="Please wait";
+                  //   console.log("doings");
+                  // }
+                  // while(this.responseText=="");
                   console.log("responds");
+                  
 
                     document.getElementById("dis_table").innerHTML = this.responseText;
                 }
                 else{
                   console.log("No responds");
                 }
-            };
-
-            xmlhttp.open("GET","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver,true);
-            console.log("request sent");
-
-
+            }
+            // document.getELementById("dis_table").innerHTML=" ";
+            xmlhttp.open("GETT","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver+"&office="+office,true);
+            xmlhttp.send();
+            // console.log("request sent");
+            // console.log(lf_id);
+            // console.log(receiver);
+            // console.log(office);
   }
   
 }

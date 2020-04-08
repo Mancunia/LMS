@@ -880,13 +880,16 @@ class lms_con{
                 echo "hello";
                 $conn = Database::getInstance();
                 $db = $conn->getConnection();
-                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver' `signature`='sign' WHERE `letter_flow_id`='$id'
+                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='sign' WHERE `letter_flow_id`='$id'
                 ");
+                 echo "hell";
                 if($result){
+                     echo "hell";
                    return $id;
                 }
                 else{
-                    return "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                     
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
                     <strong>OOPs!</strong> This is unsual letter wasn't dispatched
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                     <span aria-hidden='true'>&times;</span>

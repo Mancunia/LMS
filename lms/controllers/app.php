@@ -913,7 +913,7 @@ class lms_con{
                 $db = $conn->getConnection();
                 $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='some' WHERE `letter_flow_id`='$id'
                 ");
-                if(!result){
+                if(!$result){
                     echo"
                     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
                     <strong>OOPs!</strong> This is unsual
@@ -933,6 +933,37 @@ class lms_con{
 
         } 
 
+        function getDispatched($id){
+             try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+                $result=mysqli_query($db,"select lf.letter_flow_id,lf.des,lf.date as flow_date,l.letter_subject,l.letter_id, l.letter_source as org_source, l.letter_ref as ref,l.letter_date,u.unit_name
+                from letter_flow lf join letter l
+                on lf.letter_id=l.letter_id join unit u
+                on u.unit_id=lf.source
+                where lf.source='$id' and lf.here=1 and lf.receiver is not null and lf.signature is not null ");
+
+                 if($result){
+                     return $result;
+                 }
+                 else{
+                     echo "
+                     <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                                    <strong>OOPs!</strong> This is unsual no <b>Letter</b>
+                                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                      <span aria-hidden='true'>&times;</span>
+                                    </button>
+                                    </div>
+                     ";
+                 }
+
+
+                 }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+        }
 
  
 

@@ -5,9 +5,11 @@
 include_once 'requires/header.php';
 $received=$lms_con->getReceived($_SESSION['office']);
 $dispatching=$lms_con->postDispatching($_SESSION['office']);
+$dispatched=$lms_con->getDispatched($_SESSION['office']);
 
 $no_received=mysqli_num_rows($received);
 $no_dispatching=mysqli_num_rows($dispatching);
+$no_dispatched=mysqli_num_rows($dispatched);
 
 
 
@@ -88,7 +90,9 @@ $no_dispatching=mysqli_num_rows($dispatching);
                 <li class="nav-item waves-effect waves-light">
                   <a class="nav-link btn btn-lg " id="contact-tab" data-toggle="tab" href="#dispatched" role="tab" aria-controls="contact" aria-selected="true">
                   <i class="fa fa-arrow-up"></i>Dispatched
-                  <span class="badge badge-success">0</span>
+                  <span class="badge badge-success">
+                  <?php echo $no_dispatched; ?>
+                  </span>
                   </a>
                 </li>
 
@@ -193,8 +197,8 @@ $no_dispatching=mysqli_num_rows($dispatching);
                     
                   </tr>
         </thead>
-        <tbody>
-        <div id="dis_table">
+        <tbody id="dis_table">
+        <div >
         <?php
             $n=1;
             while($r=mysqli_fetch_array($dispatching)){
@@ -279,14 +283,52 @@ $no_dispatching=mysqli_num_rows($dispatching);
                   </tr>
         </thead>
         <tbody>
-            
-            <tr>
-                <td>Shad Decker</td>
-                <td>Regional Director</td>
-                <td>Edinburgh</td>
-                <td>51</td>
-                <td>$183,000</td>
-            </tr>
+        <div >
+        <?php
+            $n=1;
+            while($r=mysqli_fetch_array($dispatched)){
+              
+              // $receiver=$extras->get_user($r['receiver']);
+              $unit=$extras->get_unit($r['des']);
+              $source=$extras->get_unit($r['org_source']);
+
+              $tool_tip='
+              Letter ID: '.$r['letter_id'].'
+              Original Source: '.$source.'
+              Letter Date: '.$r['letter_date'].'
+              ';
+
+              echo '
+              <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
+              <td >'.$n.'</td>
+                <td>'.$r['ref'].'</td>
+                <td>'.$r['letter_subject'].' </td>
+                <td>'.$unit.'</td>
+                <td>'.$r['flow_date'].'</td>
+              ';
+              
+              echo'<td>
+              <div class="">
+               <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
+               
+               </a>
+               
+              
+               
+              </div>
+              
+
+              
+
+              </td>
+              
+              </tr>';
+              $n++;
+
+            }
+
+            ?>
+        </div>
         </tbody>
         <tfoot>
         <tr>
@@ -375,11 +417,12 @@ function updateDispatch(str){
             }
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  // do{
-                  //   document.getElementById("dis_table").innerHTML="Please wait";
-                  //   console.log("doings");
-                  // }
-                  // while(this.responseText=="");
+                  do{
+                    document.getElementById("dis_table").innerHTML="Please wait";
+                    console.log("doings");
+                  }
+                  while(this.responseText=="");
+
                   console.log("responds");
                   
 

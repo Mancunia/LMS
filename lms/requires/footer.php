@@ -73,7 +73,7 @@
   <script src="../js/demo/chart-area-demo.js"></script> -->
 
   <!-- AJAX controller-->
-  <!-- <script src="../ajax/controller.js"> -->
+  <script src="ajax/controller.js">
   
   </script>
 

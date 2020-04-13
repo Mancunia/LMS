@@ -21,13 +21,15 @@ $feed_msg="";
     //  $To=$_POST['destination'];
     //  $from=$_POST['source'];
 
-    echo $_POST['ref']." " .$_POST['source']." " .$_POST['sender']." " . $_POST['letter_date']." " . $_POST['send_addr']." " . $_POST['receive_addr']." " . $_POST['subject'];
+    // echo $_POST['ref']." " .$_POST['source']." " .$_POST['sender']." " . $_POST['letter_date']." " . $_POST['send_addr']." " . $_POST['receive_addr']." " . $_POST['subject'];
+    
     if(($_POST['sender']=="")){
       $sender=$_POST['source'];
     }
     else{
       $sender=$_POST['sender'];
     }
+
 
      $letter=$lms_con->post_letter($_POST['ref'], $_POST['source'],$sender, $_POST['letter_date'], $_POST['send_addr'], $_POST['receive_addr'], $_POST['subject']);
      
@@ -84,7 +86,7 @@ Reference:<input class="form-control" type="text" name="ref" placeholder="Refere
    <div class="col-4">
 Source: <!--<div id="source1"> -->
 
-  <select  name="source" id="source1" class=" form-control" data-live-search="true" data-actions-box="true" >
+  <select  name="source" id="source1" class=" form-control" required data-live-search="true" data-actions-box="true" onmouseout="ch_empty(this)">
 | <option id="priv">Select Source</option>
     <?php
 
@@ -261,5 +263,8 @@ $('#btnget').click(function() {
 
 
 
+     </script>
+     <script>
+     
      </script>
 

@@ -38,3 +38,10 @@ else{
     
 
 // }
+var str;
+function ch_empty(str){
+    if(str.value==""){
+        alert(str+" is not supposed to be empty");
+    }
+
+}

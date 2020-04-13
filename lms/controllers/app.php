@@ -877,14 +877,14 @@ class lms_con{
 
         function updateLetter_flow($id,$receiver){
             try{
-                echo "hello";
+                // echo "hello";
                 $conn = Database::getInstance();
                 $db = $conn->getConnection();
                 $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='sign' WHERE `letter_flow_id`='$id'
                 ");
-                 echo "hell";
+                //  echo "hell";
                 if($result){
-                     echo "hell";
+                    //  echo "hell";
                    return $id;
                 }
                 else{

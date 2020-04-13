@@ -21,6 +21,10 @@ $no_dispatched=mysqli_num_rows($dispatched);
 
 ?>
 
+<script>
+var office_id= "<?php echo $_SESSION['office'];?>";
+</script>
+
 
 
   
@@ -73,7 +77,10 @@ $no_dispatched=mysqli_num_rows($dispatched);
                   <a class="nav-link btn btn-lg active" id="home-tab" data-toggle="tab" href="#received" role="tab" aria-controls="home" aria-selected="false">
                   <i class="fa fa-arrow-down"></i>Received
                   <span class="badge badge-info">
+                  <div id="ceived">
                   <?php echo $no_received; ?>
+                  </div>
+                  
                   </span>
                   </a>
                 </li>
@@ -82,7 +89,10 @@ $no_dispatched=mysqli_num_rows($dispatched);
                   <a class="nav-link btn btn-lg " id="profile-tab" data-toggle="tab" href="#dispatching" role="tab" aria-controls="profile" aria-selected="false">
                   <i class="fa fa-history"></i>Dispatching
                   <span class="badge badge-primary">
+                  <div id="patching">
                   <?php echo $no_dispatching; ?>
+                  </div>
+                  
                   </span>
                   </a>
                 </li>
@@ -91,7 +101,10 @@ $no_dispatched=mysqli_num_rows($dispatched);
                   <a class="nav-link btn btn-lg " id="contact-tab" data-toggle="tab" href="#dispatched" role="tab" aria-controls="contact" aria-selected="true">
                   <i class="fa fa-arrow-up"></i>Dispatched
                   <span class="badge badge-success">
+                  <div id="patched">
                   <?php echo $no_dispatched; ?>
+                  </div>
+                  
                   </span>
                   </a>
                 </li>
@@ -114,52 +127,8 @@ $no_dispatched=mysqli_num_rows($dispatched);
                     
                   </tr>
         </thead>
-        <tbody>
-            <?php
-            $n=1;
-            while($r=mysqli_fetch_array($received)){
-              
-              $receiver=$extras->get_user($r['receiver']);
-              $unit=$extras->get_unit($r['source']);
-
-              $tool_tip='
-              Letter ID: '.$r['letter_id'].'
-              Original Source: '.$r['org_source'].'
-              Letter Date: '.$r['letter_date'].'
-              Receiver: '.$receiver.'
-              ';
-
-              echo '
-              <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
-              <td >'.$n.'</td>
-                <td>'.$r['ref'].'</td>
-                <td>'.$r['letter_subject'].' </td>
-                <td>'.$unit.'</td>
-                <td>'.$r['flow_date'].'</td>
-              ';
-              
-              echo'<td>
-              <div>
-               <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
-               
-               </a>
-               
-               <a href="dispatch.php?letter='.$r['letter_id'].'" title="dispatch"><i class="fa fa-share" aria-hidden="true"></i>
-               
-               </a>
-              </div>
-              
-
-              
-
-              </td>
-              
-              </tr>';
-              $n++;
-
-            }
-
-            ?>
+        <tbody id="received_table">
+            <!-- received table -->
             <tr>
                 
                 
@@ -197,57 +166,9 @@ $no_dispatched=mysqli_num_rows($dispatched);
                     
                   </tr>
         </thead>
-        <tbody id="dis_table">
-        <div >
-        <?php
-            $n=1;
-            while($r=mysqli_fetch_array($dispatching)){
-              
-              // $receiver=$extras->get_user($r['receiver']);
-              $unit=$extras->get_unit($r['des']);
-              $source=$extras->get_unit($r['org_source']);
+        <tbody id="dispatching_table">
 
-              $tool_tip='
-              Letter ID: '.$r['letter_id'].'
-              Original Source: '.$source.'
-              Letter Date: '.$r['letter_date'].'
-              ';
-
-              echo '
-              <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
-              <td >'.$n.'</td>
-                <td>'.$r['ref'].'</td>
-                <td>'.$r['letter_subject'].' </td>
-                <td>'.$unit.'</td>
-                <td>'.$r['flow_date'].'</td>
-              ';
-              
-              echo'<td>
-              <div class="">
-               <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
-               
-               </a>
-               
-               <button data-toggle="modal" class="btn" data-target="#dispatchModal" value="'.$r['letter_flow_id'].'" onclick="getDispatch(this.value)" title="dispatch"><i class="fa fa-share" aria-hidden="true"></i>
-               
-               </button>
-               
-              </div>
-              
-
-              
-
-              </td>
-              
-              </tr>';
-              $n++;
-
-            }
-
-            ?>
-        </div>
-
-        
+        <!-- dispatching table -->
 
             
            
@@ -282,53 +203,10 @@ $no_dispatched=mysqli_num_rows($dispatched);
                     
                   </tr>
         </thead>
-        <tbody>
-        <div >
-        <?php
-            $n=1;
-            while($r=mysqli_fetch_array($dispatched)){
-              
-              // $receiver=$extras->get_user($r['receiver']);
-              $unit=$extras->get_unit($r['des']);
-              $source=$extras->get_unit($r['org_source']);
+        <tbody id="dispatched_table">
+        
+              <!-- dispatched table -->
 
-              $tool_tip='
-              Letter ID: '.$r['letter_id'].'
-              Original Source: '.$source.'
-              Letter Date: '.$r['letter_date'].'
-              ';
-
-              echo '
-              <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
-              <td >'.$n.'</td>
-                <td>'.$r['ref'].'</td>
-                <td>'.$r['letter_subject'].' </td>
-                <td>'.$unit.'</td>
-                <td>'.$r['flow_date'].'</td>
-              ';
-              
-              echo'<td>
-              <div class="">
-               <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
-               
-               </a>
-               
-              
-               
-              </div>
-              
-
-              
-
-              </td>
-              
-              </tr>';
-              $n++;
-
-            }
-
-            ?>
-        </div>
         </tbody>
         <tfoot>
         <tr>
@@ -369,79 +247,7 @@ $no_dispatched=mysqli_num_rows($dispatched);
 
 <script>
 // $(document).ready(function(){
-var id;
-var str;
-function getDispatch(str){
-    // console.log(str);
-    // console.log('haha');
-    if (str == "") {
-        document.getElementById("txtHint").innerHTML = "";
-        return;
-    } else {
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("form").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","ajax/controller.php?dispatch_id="+str,true);
-        xmlhttp.send();
-    }
-}
-// });
 
-function updateDispatch(str){
-  
-  var receiver = document.getElementById("receiver").value;
-
-  if(receiver==""){
-    document.getElementById("re_ce").setAttribute("class","badge badge-danger badge-pill");
-  document.getElementById("re_ce").innerHTML="please enter a receiver";
-  }
-  else{
-    var office='<?php echo $_SESSION['office']; ?>';
-    var lf_id = str;
-
-      if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  do{
-                    document.getElementById("dis_table").innerHTML="Please wait";
-                    console.log("doings");
-                  }
-                  while(this.responseText=="");
-
-                  console.log("responds");
-                  
-
-                    document.getElementById("dis_table").innerHTML = this.responseText;
-                }
-                else{
-                  console.log("No responds");
-                }
-            }
-            // document.getELementById("dis_table").innerHTML=" ";
-            xmlhttp.open("GETT","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver+"&office="+office,true);
-            xmlhttp.send();
-            // console.log("request sent");
-            // console.log(lf_id);
-            // console.log(receiver);
-            // console.log(office);
-  }
-  
-}
 </script>
 
 <!-- <script>

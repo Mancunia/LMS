@@ -5,59 +5,13 @@ $extras= new extras();
 
 // $dispatch_id=$_REQUEST['dispatch_id'];
 
-if(isset($_GET['dispatching']) && isset($_GET['receiver'])&& isset($_GET['office'])){
+if(isset($_GET['dispatching']) && isset($_GET['receiver'])){
   echo"<script>
   alert('in da update');
   </script>";
   $receiver= $_GET['receiver'];
   $l_id=$_GET['dispatching'];
    $lms_con->updateLetter_flow($l_id,$receiver);
-  //  header("Location:../index.php#profile");
-
-    $dispatching=$lms_con->postDispatching($_GET['office']);
-    $n=1;
-            while($r=mysqli_fetch_array($dispatching)){
-              
-              // $receiver=$extras->get_user($r['receiver']);
-              $unit=$extras->get_unit($r['des']);
-              $source=$extras->get_unit($r['org_source']);
-  
-              $tool_tip='
-              Letter ID: '.$r['letter_id'].'
-              Original Source: '.$source.'
-              Letter Date: '.$r['letter_date'].'
-              ';
-  
-              echo '
-              <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
-              <td >'.$n.'</td>
-                <td>'.$r['ref'].'</td>
-                <td>'.$r['letter_subject'].' </td>
-                <td>'.$unit.'</td>
-                <td>'.$r['flow_date'].'</td>
-              ';
-              
-              echo'<td>
-              <div>
-               <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
-               
-               </a>
-               
-               <button data-toggle="modal" class="btn" data-target="#dispatchModal" value="'.$r['letter_flow_id'].'" onclick="getDispatch(this.value)" title="dispatch"><i class="fa fa-share" aria-hidden="true"></i>
-               
-               </button>
-               
-              </div>
-              
-  
-              
-  
-              </td>
-              
-              </tr>';
-              $n++;
-  
-            }
   
 
   
@@ -65,24 +19,20 @@ if(isset($_GET['dispatching']) && isset($_GET['receiver'])&& isset($_GET['office
 
 
 
-
-
-
 if(isset($_GET['dispatch_id'])){
     $result=$lms_con->getDispatch($_GET['dispatch_id']);
-
-$l=mysqli_fetch_array($result);
-$lf_id=$l['letter_flow_id'];
-$letter_id=$l['letter_id'];
-$source=$l['source'];
-$destination=$l['des'];
-$sender=$l['sender'];
-$date=$l['flow_date'];
-
-$r_addr=$l['receiver_address'];
-  $s_addr=$l['send_address'];
-  $ref=$l['letter_ref'];
-  $subject=$l['letter_subject'];
+  
+    $l=mysqli_fetch_array($result);
+    $lf_id=$l['letter_flow_id'];
+    $source=$l['source'];
+    $letter_id=$l['letter_id'];
+    $sender=$l['sender'];
+    $destination=$l['des'];
+    $date=$l['flow_date'];
+    $s_addr=$l['send_address'];
+    $r_addr=$l['receiver_address'];
+    $subject=$l['letter_subject'];
+    $ref=$l['letter_ref'];
 
 
     echo'
@@ -118,10 +68,10 @@ $r_addr=$l['receiver_address'];
 
       
 
-    </div>
-
-    <div class="row container">
-
+      
+      </div>
+      
+      <div class="row container">
         
 
         <div class="col-md-12 row">
@@ -214,6 +164,166 @@ $r_addr=$l['receiver_address'];
     ';
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//loading content of table in realtime
+
+if(isset($_GET['received'])){
+  $received=$lms_con->getReceived($_GET['received']);
+
+  $n=1;
+  while($r=mysqli_fetch_array($received)){
+    
+    $receiver=$extras->get_user($r['receiver']);
+    $unit=$extras->get_unit($r['source']);
+
+    $tool_tip='
+    Letter ID: '.$r['letter_id'].'
+    Original Source: '.$r['org_source'].'
+    Letter Date: '.$r['letter_date'].'
+    Receiver: '.$receiver.'
+    ';
+
+    echo '
+    <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
+    <td >'.$n.'</td>
+      <td>'.$r['ref'].'</td>
+      <td>'.$r['letter_subject'].' </td>
+      <td>'.$unit.'</td>
+      <td>'.$r['flow_date'].'</td>
+    ';
+    
+    echo'<td>
+    <div>
+     <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
+     
+     </a>
+     
+     <a href="dispatch.php?letter='.$r['letter_id'].'" title="dispatch"><i class="fa fa-share" aria-hidden="true"></i>
+     
+     </a>
+    </div>
+    
+
+    
+
+    </td>
+    
+    </tr>';
+    $n++;
+
+  }
+
+  
+
+}
+
+if(isset($_GET['dispatching'])){
+
+  $dispatching=$lms_con->postDispatching($_GET['dispatching']);
+  $n=1;
+  while($r=mysqli_fetch_array($dispatching)){
+    
+    // $receiver=$extras->get_user($r['receiver']);
+    $unit=$extras->get_unit($r['des']);
+    $source=$extras->get_unit($r['org_source']);
+
+    $tool_tip='
+    Letter ID: '.$r['letter_id'].'
+    Original Source: '.$source.'
+    Letter Date: '.$r['letter_date'].'
+    ';
+
+    echo '
+    <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
+    <td >'.$n.'</td>
+      <td>'.$r['ref'].'</td>
+      <td>'.$r['letter_subject'].' </td>
+      <td>'.$unit.'</td>
+      <td>'.$r['flow_date'].'</td>
+    ';
+    
+    echo'<td>
+    <div class="">
+     <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
+     
+     </a>
+     
+     <button data-toggle="modal" class="btn" data-target="#dispatchModal" value="'.$r['letter_flow_id'].'" onclick="getDispatch(this.value)" title="dispatch"><i class="fa fa-share" aria-hidden="true"></i>
+     
+     </button>
+     
+    </div>
+    
+
+    
+
+    </td>
+    
+    </tr>';
+    $n++;
+
+  }
+}
+
+if(isset($_GET['dispatched'])){
+
+            $dispatched=$lms_con->getDispatched($_GET['dispatched']);
+            $n=1;
+            while($r=mysqli_fetch_array($dispatched)){
+              
+              // $receiver=$extras->get_user($r['receiver']);
+              $unit=$extras->get_unit($r['des']);
+              $source=$extras->get_unit($r['org_source']);
+
+              $tool_tip='
+              Letter ID: '.$r['letter_id'].'
+              Original Source: '.$source.'
+              Letter Date: '.$r['letter_date'].'
+              ';
+
+              echo '
+              <tr  data-toggle="tooltip" data-placement="bottom" title="'.$tool_tip.'">
+              <td >'.$n.'</td>
+                <td>'.$r['ref'].'</td>
+                <td>'.$r['letter_subject'].' </td>
+                <td>'.$unit.'</td>
+                <td>'.$r['flow_date'].'</td>
+              ';
+              
+              echo'<td>
+              <div class="">
+               <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
+               
+               </a>
+               
+              
+               
+              </div>
+              
+
+              
+
+              </td>
+              
+              </tr>
+              ';
+              $n++;
+
+            }
+}
 
 
 

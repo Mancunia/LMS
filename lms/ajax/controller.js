@@ -2,6 +2,20 @@ var id;
 var str;
 var office= office_id ;
 
+
+//.....................Extras..............................................
+function _Count(str){
+
+    id= $('#'+str+' tr').length;
+    if (id==0){
+        $('#'+str).hide(500);
+    }
+    else{
+        return id;
+    }
+
+}
+
 // .......................Basic stuff .............................
 
 function loadReceived(str){
@@ -16,11 +30,13 @@ function loadReceived(str){
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.responseText==""){
-                $("#received_table").html("<b style='margin-left:70%;'><i class='fa fa-times' aria-hidden='true'>Nothing show</i></b>");
+               ;
+                $("#received_table").html(responds(1));
             }
             else{
 
                 $("#received_table").html(this.responseText);
+                $("#ceived").html(_Count("received_table"));
             }
         }
     };
@@ -44,6 +60,7 @@ function loadDispatching(str){
             }
             else{
                 $("#dispatching_table").html(this.responseText);
+                $("#patching").html(_Count("dispatching_table"));
             }
         }
     };
@@ -73,6 +90,7 @@ function loadDispatched(str){
                 // } while (condition);
 
                 $("#dispatched_table").html(this.responseText);
+                $("#patched").html(_Count("dispatched_table"));
             }
             
         }
@@ -113,7 +131,7 @@ function getDispatch(str){
 function updateDispatch(str){
   
   var receiver = document.getElementById("receiver").value;
-  var patching = document.getElementById("patching").innerHTML;
+//   var patching = document.getElementById("patching").innerHTML;
 
   if(receiver==""){
     document.getElementById("re_ce").setAttribute("class","badge badge-danger badge-pill");
@@ -158,6 +176,35 @@ function updateDispatch(str){
 }
 
 
+
+function responds(str){
+
+    switch (str) {
+        case 0:
+            
+
+           document.write("Something is wrong somewhere, please contact your supervisor");
+
+            break;
+
+        case 1:
+            alert("Sorry no new letters");
+
+        
+            break;
+    
+        default:
+            break;
+    }
+}
+
+
+
+
+
+
+
+//........................fire up.............................
 $(document).ready(function(){
 
 

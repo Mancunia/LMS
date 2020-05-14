@@ -3,13 +3,11 @@
 
 
 include_once 'requires/header.php';
-$received=$lms_con->getReceived($_SESSION['office']);
-$dispatching=$lms_con->postDispatching($_SESSION['office']);
-$dispatched=$lms_con->getDispatched($_SESSION['office']);
 
-$no_received=mysqli_num_rows($received);
-$no_dispatching=mysqli_num_rows($dispatching);
-$no_dispatched=mysqli_num_rows($dispatched);
+
+// $no_received=mysqli_num_rows($received);
+// $no_dispatching=mysqli_num_rows($dispatching);
+// $no_dispatched=mysqli_num_rows($dispatched);
 
 
 
@@ -78,7 +76,7 @@ var office_id= "<?php echo $_SESSION['office'];?>";
                   <i class="fa fa-arrow-down"></i>Received
                   <span class="badge badge-info">
                   <div id="ceived">
-                  <?php echo $no_received; ?>
+                  
                   </div>
                   
                   </span>
@@ -90,7 +88,7 @@ var office_id= "<?php echo $_SESSION['office'];?>";
                   <i class="fa fa-history"></i>Dispatching
                   <span class="badge badge-primary">
                   <div id="patching">
-                  <?php echo $no_dispatching; ?>
+                  
                   </div>
                   
                   </span>
@@ -102,7 +100,7 @@ var office_id= "<?php echo $_SESSION['office'];?>";
                   <i class="fa fa-arrow-up"></i>Dispatched
                   <span class="badge badge-success">
                   <div id="patched">
-                  <?php echo $no_dispatched; ?>
+                  
                   </div>
                   
                   </span>

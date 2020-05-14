@@ -208,8 +208,18 @@ Receiver: <input type="text" class="form-control" name="receiver">
 </div>
 <br>
 <div class="row">
-Signature: <canvas id="signature-pad" class="sign_canvas" name="signature"  style="border:1px solid #000000; border-radius:5px; width:100%; height:50%;">
-</canvas>
+<div class="sigPad" id="smoothed" style="width:404px;">
+<!-- <h2>Bezier Curves (constant pen width)</h2> -->
+<ul class="sigNav">
+<li class="drawIt"><a href="#draw-it" >Draw It</a></li>
+<li class="clearButton"><a href="#clear">Clear</a></li>
+</ul>
+<div class="sig sigWrapper" style="height:auto;">
+<div class="typed"></div>
+<canvas class="pad" width="400" height="250"></canvas>
+<input type="hidden" name="output" class="output">
+</div>
+</div>
 </div>
 
 

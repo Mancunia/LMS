@@ -45,3 +45,9 @@ function ch_empty(str){
     }
 
 }
+
+
+$("#btn-check").click(function(){
+    var bla = $('.output').val();
+alert(bla);
+});

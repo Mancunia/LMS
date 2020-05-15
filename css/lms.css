@@ -38,7 +38,10 @@ body{
   }
   
 
-
+.the-pad{
+    margin-left: 20px;
+    margin-bottom: 10%;
+}
 
 .nav_inlink{
    color: rgb(2, 2, 2); 
@@ -53,11 +56,11 @@ background-color: rgba(0, 0, 0, 0.729);
 
 }
 
-.sign_canvas{
+canvas{
     border:1px solid #000000;
     border-radius: 5px;
     width:100%;
-    height:50%;
+    height:150px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;

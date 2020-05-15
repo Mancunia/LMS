@@ -80,13 +80,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
   <!-- raw JS -->
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+
+  <script src="../jquery.signaturepad.js"></script>
   <script>
-
-  $(document).ready(function() {
-    
-} );
-
+    $(document).ready(function() {
+      $('.sigPad').signaturePad();
+    });
   </script>
+  <script src="../assets/json2.min.js"></script>
 
 </body>
 </html>

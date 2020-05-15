@@ -36,13 +36,26 @@ if(isset($_POST['dispatch'])){
     </div>";
   }
   else{
+
+    if(!isset($_POST['output'])){
+      $feed_msg="<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+    <strong>Attention!</strong> You forgot <strong>Sign</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+    </div>";
+    }
+    else{
       foreach($_POST['destination'] as $selected){
+        echo $_POST['output'];
       
-      $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$selected,$_POST['receiver'],$_SESSION['user_id']);
+      $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$selected,$_POST['receiver'],$_SESSION['user_id'],$_POST['output']);
 
         }
 
       }
+    }
+      
   
     
     
@@ -176,7 +189,7 @@ echo $feed_msg;
 
 <div class="col-md-9 card " style="width:80rem;">
 
-<form action="" class="form-group" method="post">
+<form action="" class="form-group sigPad" method="post">
 <div class="row">
  <div class="col-6">
  From: <input type="text" class="form-control" readonly value="<?php echo $extras->get_unit($_SESSION['office']) ?>">
@@ -184,7 +197,7 @@ echo $feed_msg;
  </div>
 
  <div class="col-6">
- To: <select class="selectpicker form-control" name="destination[]" data-live-search="true" data-actions-box="true" multiple>
+ To: <select class="selectpicker form-control" name="destination[]" id="destination[]" data-live-search="true" data-actions-box="true" multiple>
   <optgroup label="Units">
 
   <?php
@@ -207,20 +220,25 @@ Receiver: <input type="text" class="form-control" name="receiver">
 </div>
 </div>
 <br>
-<div class="row">
-<div class="sigPad" id="smoothed" style="width:404px;">
-<!-- <h2>Bezier Curves (constant pen width)</h2> -->
+<div class="the-pad">
+
 <ul class="sigNav">
-<li class="drawIt"><a href="#draw-it" >Draw It</a></li>
-<li class="clearButton"><a href="#clear">Clear</a></li>
-</ul>
-<div class="sig sigWrapper" style="height:auto;">
-<div class="typed"></div>
-<canvas class="pad" width="400" height="250"></canvas>
-<input type="hidden" name="output" class="output">
+      <!-- <li class="typeIt"><a href="#type-it" class="current">Type It</a></li> -->
+      <li class="drawIt"><a href="#draw-it" >Click to Sign</a></li>
+      <li class="clearButton"><a href="#clear">Clear</a></li>
+    </ul>
+<div class="row jumbotron-fluid">
+
+    <div class="sig sigWrapper">
+      <div class="typed"></div>
+      <canvas class="pad" width="400" height="250"></canvas>
+      <input type="text" name="output" class="output" id="output">
+    </div>
 </div>
+
 </div>
-</div>
+<button id="btn-check">check please</button>
+
 
 
 
@@ -242,6 +260,8 @@ Receiver: <input type="text" class="form-control" name="receiver">
 
 </div>
 </form>
+
+
 
 
 
@@ -269,5 +289,9 @@ Receiver: <input type="text" class="form-control" name="receiver">
      <?php
      require_once 'requires/footer.php';
      ?>
-     <script src="https://cdn.jsdelivr.net/npm/signature_pad@3.0.0-beta.3/dist/signature_pad.umd.min.js"></script>
+
+
+     <script>
+     
+     </script>
 

@@ -41,9 +41,11 @@ $extras= new extras();
   <!-- Custom styles for this template-->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link href="../css/sb-admin.css" rel="stylesheet">
-<link href="../css/lms.css" rel="stylesheet">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
+<link href="../assets/jquery.signaturepad.css" rel="stylesheet">
+<link href="../css/lms.css" rel="stylesheet">
   <!-- internal styling -->
   <style>
   

@@ -627,7 +627,7 @@ class lms_con{
 
         
 
-        function dispatch($letter_id,$source,$destination, $receiver,$sender){
+        function dispatch($letter_id,$source,$destination, $receiver,$sender,$signed){
             try{
                 $conn = Database::getInstance();
                 $db = $conn->getConnection();
@@ -637,10 +637,17 @@ class lms_con{
                 $where=mysqli_query($db,"SELECT * FROM letter_flow WHERE `letter_id`='$letter_id' AND `des`='$source' AND `here`=1 ");
                 $n=mysqli_num_rows($where);
                 if($n==1){
+                    if($signed==""){
+                        echo"
+                        <script>
+                        alert('Signature wasn't signed');
+                        </script>
+                        ";
+                    }
 
                     // echo "here";
                     //leave unit 
-                    $redir=mysqli_query($db,"UPDATE `letter_flow` SET `here`= 0 WHERE `letter_id`='$letter_id' AND `des`='$source' AND `here`=1");
+                    $redir=mysqli_query($db,"UPDATE `letter_flow` SET `here`= 0 WHERE `letter_id`='$letter_id' AND `des`='$source' AND `here`=1 AND `signature`='$signed'");
                               if($redir){
                                 //   echo " left here";
 

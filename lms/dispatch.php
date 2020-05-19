@@ -25,6 +25,8 @@ else{
 
 }
 
+$sign='';
+
 if(isset($_POST['dispatch'])){
   if(!isset($_POST['destination'])){
 
@@ -46,12 +48,60 @@ if(isset($_POST['dispatch'])){
     </div>";
     }
     else{
-      foreach($_POST['destination'] as $selected){
-        echo $_POST['output'];
-      
-      $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$selected,$_POST['receiver'],$_SESSION['user_id'],$_POST['output']);
+      $des=count($_POST['destination']);
+
+      if($des>1){
+
+        foreach($_POST['destination'] as $selected){
+        
+      $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$selected,$_POST['receiver'],$_SESSION['user_id'],$sign);
 
         }
+      }
+      else{
+
+        if(!isset($_POST['receiver'])){
+
+          echo "
+          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+    <strong>Attention!</strong> There has to be a <strong>receiver</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+    </div>
+          ";
+          
+        }
+
+        else{
+
+           $sign = base64_encode($_POST['output']);
+
+        if(!$sign){
+
+          echo "
+          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+    <strong>Attention!</strong> Cound not convert <strong>Signature</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+      <span aria-hidden='true'>&times;</span>
+    </button>
+    </div>
+          ";
+
+        }
+
+        else{
+
+           $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$_POST['destination'],$_POST['receiver'],$_SESSION['user_id'],$sign);
+        }
+
+        }
+
+       
+
+       
+      }
+      
 
       }
     }

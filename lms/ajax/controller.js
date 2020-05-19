@@ -120,6 +120,7 @@ function getDispatch(str){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 $("#form").html(this.responseText);
+                
             }
         };
         xmlhttp.open("GET","ajax/controller.php?dispatch_id="+str,true);
@@ -131,13 +132,29 @@ function getDispatch(str){
 function updateDispatch(str){
   
   var receiver = document.getElementById("receiver").value;
+
 //   var patching = document.getElementById("patching").innerHTML;
 
   if(receiver==""){
-    document.getElementById("re_ce").setAttribute("class","badge badge-danger badge-pill");
-  document.getElementById("re_ce").innerHTML="please enter a receiver";
+      
+                // $("#heading").html("Please add Receiver name ");
+                // $("#reason").html("Please make sure to fill all the required fields");
+                // $(".alert ").attr("class","alert alert-warning");
+                // $(".alert").show();
+                // $(".alert").hide(5000);
+
+                $("#re_ce").attr("class","badge badge-danger badge-pill");
+                 document.getElementById("re_ce").innerHTML="please enter a receiver";
+                 $("#receiver").css("border-color","red");
   }
   else{
+    var mycanvas = document.getElementById('canvas');
+    var img = mycanvas.toDataURL("image/png");
+    // anchor = $("#signature");
+    // anchor.val(img);
+    // $("#signatureform").submit();
+
+    console.log(img);
     
     var lf_id = str;
     
@@ -151,22 +168,55 @@ function updateDispatch(str){
             }
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                //   
-                    loadDispatching(office);
-                
 
-                  
-                    
+                    $("#heading").html("Great! ");
+                    $("#reason").html("Letter Successfully dispatched");
+                    $(".alert ").attr("class","alert alert-succes");
+                    $(".alert").show();
+
+                    $(".alert").hide(5000,function(){
+
+                        $("#dispatchModal").modal('hide');
+
+                         loadDispatching(office);
+
+
+                    });              
                    
 
                 }
                 else{
+
                   console.log("No responds");
+
+                  $("#heading").html("Something went wrong! ");
+                $("#reason").html("Request couldn't go through");
+                $(".alert ").attr("class","alert alert-danger");
+
+                $(".alert").show(5000,function(){
+                    $(".alert ").attr("class","alert alert-warning");
+                     $("#heading").html("Something went wrong! ");
+                $("#reason").html("Request couldn't go through");
+                });
+                
+
                 }
+
             }
             // document.getELementById("dis_table").innerHTML=" ";
-            xmlhttp.open("GETT","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver,true);
+            if(lf_id!=""&&receiver!=""&&img!=""){
+                xmlhttp.open("POSt","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver+"&sign="+img,true);
             xmlhttp.send();
+            }
+            else{
+                $("#heading").html("Something went wrong! ");
+                $("#reason").html("Please make sure to fill all the required fields");
+                $(".alert ").attr("class","alert alert-danger");
+                $(".alert").show();
+                $(".alert").hide(5000);
+
+            }
+            
             // console.log("request sent");
             // console.log(lf_id);
             // console.log(receiver);
@@ -211,7 +261,12 @@ function dispatch(){
 
 //........................fire up.............................
 $(document).ready(function(){
+    $(".alert").hide();
 
+    // $("#canvasDiv").css("display","none");
+
+
+    
 
 
 loadReceived(office);
@@ -229,7 +284,15 @@ loadDispatching(office);
 // ............................. Actions by trigger....................................
 
 
+$("#receiver").on("mouseout",function(){
+    if(this.val()!==""){
 
+        $("#canvasDiv").show(3000);
+    }
+        
+
+
+    });
 
 
 

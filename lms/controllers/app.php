@@ -882,12 +882,19 @@ class lms_con{
             }
         }
 
-        function updateLetter_flow($id,$receiver){
+        function updateLetter_flow($id,$receiver,$sign){
             try{
+
+                if(!isset($id)&&!isset($receiver)&&!isset($sign)){
+                    header("Location:../404.html");
+                }
+                else{
+
+                
                 // echo "hello";
                 $conn = Database::getInstance();
                 $db = $conn->getConnection();
-                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='sign' WHERE `letter_flow_id`='$id'
+                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='$sign' WHERE `letter_flow_id`='$id'
                 ");
                 //  echo "hell";
                 if($result){
@@ -903,6 +910,7 @@ class lms_con{
                     </button>
                     </div>";
                 }
+            }
             
             }
             catch(Exception $e){

@@ -5,13 +5,24 @@ $extras= new extras();
 
 // $dispatch_id=$_REQUEST['dispatch_id'];
 
-if(isset($_GET['dispatching']) && isset($_GET['receiver'])){
+if(isset($_POST['dispatching']) && isset($_POST['receiver'])&& isset($_POST['sign'])){
+
+  //processing signature 
+  
+  $signature = $_POST['sign'];
+    $signatureFileName = uniqid().'.png';
+    $signature = str_replace('data:image/png;base64,', '', $signature);
+    $signature = str_replace(' ', '+', $signature);
+    $data = base64_decode($signature);
+    $file = 'signatures/'.$signatureFileName;
+    file_put_contents($file, $data);
+
   echo"<script>
   alert('in da update');
   </script>";
-  $receiver= $_GET['receiver'];
-  $l_id=$_GET['dispatching'];
-   $lms_con->updateLetter_flow($l_id,$receiver);
+  $receiver= $_POSTT['receiver'];
+  $l_id=$_POST['dispatching'];
+   $lms_con->updateLetter_flow($l_id,$receiver,$signatureFileName);
   
 
   
@@ -36,8 +47,6 @@ if(isset($_GET['dispatch_id'])){
 
 
     echo'
-
-    <form action="" name="dispatch_form"  class="form-group" >
     
     <div class="container" style="margin-left:10px;">
     <div class="row col-md-12">
@@ -157,9 +166,8 @@ if(isset($_GET['dispatch_id'])){
 
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary fa-pull-right" value="'.$lf_id.'" onclick="updateDispatch(this.value)" data-dismiss="modal">Dispatch</button>
+        <button type="button" class="btn btn-primary fa-pull-right" value="'.$lf_id.'" onclick="updateDispatch(this.value)">Dispatch</button>
       </div>
-        </form>
 
     ';
 }

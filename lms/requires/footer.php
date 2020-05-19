@@ -78,16 +78,17 @@
   </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 
   <!-- raw JS -->
   <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
 
-  <script src="../jquery.signaturepad.js"></script>
-  <script>
+  <!-- <script src="../js/sign.js"></script> -->
+  <!-- <script>
     $(document).ready(function() {
       $('.sigPad').signaturePad();
     });
-  </script>
+  </script> -->
   <script src="../assets/json2.min.js"></script>
 
 </body>

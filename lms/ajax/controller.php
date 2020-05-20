@@ -14,13 +14,13 @@ if(isset($_POST['dispatching']) && isset($_POST['receiver'])&& isset($_POST['sig
     $signature = str_replace('data:image/png;base64,', '', $signature);
     $signature = str_replace(' ', '+', $signature);
     $data = base64_decode($signature);
-    $file = 'signatures/'.$signatureFileName;
+    $file = '../signature/'.$signatureFileName;
     file_put_contents($file, $data);
 
   echo"<script>
   alert('in da update');
   </script>";
-  $receiver= $_POSTT['receiver'];
+  $receiver= $_POST['receiver'];
   $l_id=$_POST['dispatching'];
    $lms_con->updateLetter_flow($l_id,$receiver,$signatureFileName);
   

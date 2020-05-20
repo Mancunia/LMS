@@ -131,11 +131,11 @@ function getDispatch(str){
 
 function updateDispatch(str){
   
-  var receiver = document.getElementById("receiver").value;
+  var receive = document.getElementById("receiver").value;
 
 //   var patching = document.getElementById("patching").innerHTML;
 
-  if(receiver==""){
+  if(receive==""){
       
                 // $("#heading").html("Please add Receiver name ");
                 // $("#reason").html("Please make sure to fill all the required fields");
@@ -149,7 +149,9 @@ function updateDispatch(str){
   }
   else{
     var mycanvas = document.getElementById('canvas');
-    var img = mycanvas.toDataURL("image/png");
+    var img = mycanvas.toDataURL();
+
+    
     // anchor = $("#signature");
     // anchor.val(img);
     // $("#signatureform").submit();
@@ -159,63 +161,86 @@ function updateDispatch(str){
     var lf_id = str;
     
 
-      if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
+    //   if (window.XMLHttpRequest) {
+    //             // code for IE7+, Firefox, Chrome, Opera, Safari
+    //             xmlhttp = new XMLHttpRequest();
+    //         } else {
+    //             // code for IE6, IE5
+    //             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    //         }
+            // xmlhttp.onreadystatechange = function() {
+            //     if (this.readyState == 4 && this.status == 200) {
 
-                    $("#heading").html("Great! ");
-                    $("#reason").html("Letter Successfully dispatched");
-                    $(".alert ").attr("class","alert alert-succes");
-                    $(".alert").show();
+            //         $("#heading").html("Great! ");
+            //         $("#reason").html("Letter Successfully dispatched");
+            //         $(".alert ").attr("class","alert alert-succes");
+            //         $(".alert").show();
 
-                    $(".alert").hide(5000,function(){
+            //         $(".alert").hide(5000,function(){
 
-                        $("#dispatchModal").modal('hide');
+            //             $("#dispatchModal").modal('hide');
 
-                         loadDispatching(office);
+            //              loadDispatching(office);
 
 
-                    });              
+            //         });              
                    
 
-                }
-                else{
+            //     }
+            //     else{
 
-                  console.log("No responds");
+            //       console.log("No responds");
 
-                  $("#heading").html("Something went wrong! ");
-                $("#reason").html("Request couldn't go through");
-                $(".alert ").attr("class","alert alert-danger");
+            //       $("#heading").html("Something went wrong! ");
+            //     $("#reason").html("Request couldn't go through");
+            //     $(".alert ").attr("class","alert alert-danger");
 
-                $(".alert").show(5000,function(){
-                    $(".alert ").attr("class","alert alert-warning");
-                     $("#heading").html("Something went wrong! ");
-                $("#reason").html("Request couldn't go through");
-                });
+            //     $(".alert").show(5000,function(){
+            //         $(".alert ").attr("class","alert alert-warning");
+            //          $("#heading").html("Something went wrong! ");
+            //     $("#reason").html("Request couldn't go through");
+            //     });
                 
 
-                }
+            //     }
 
-            }
+            // }
             // document.getELementById("dis_table").innerHTML=" ";
-            if(lf_id!=""&&receiver!=""&&img!=""){
-                xmlhttp.open("POSt","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver+"&sign="+img,true);
-            xmlhttp.send();
-            }
-            else{
-                $("#heading").html("Something went wrong! ");
-                $("#reason").html("Please make sure to fill all the required fields");
-                $(".alert ").attr("class","alert alert-danger");
-                $(".alert").show();
-                $(".alert").hide(5000);
+            // if(lf_id!=""&&receiver!=""&&img!=""){
+            //     xmlhttp.open("POST","ajax/controller.php?dispatching="+lf_id+"&receiver="+receiver+"&sign="+img,true);
+            // xmlhttp.send();
+            // }
+            // else{
+            //     $("#heading").html("Something went wrong! ");
+            //     $("#reason").html("Please make sure to fill all the required fields");
+            //     $(".alert ").attr("class","alert alert-danger");
+            //     $(".alert").show();
+            //     // $(".alert").hide(5000);
 
-            }
+            // }
+
+            $.ajax({
+                type: "POST",
+                url: "ajax/controller.php",
+                data: { 
+                    dispatching:lf_id,
+                    receiver: receive,
+                     sign: img
+                }
+              }).done(function() {
+
+               responds("success");
+
+            loadDispatching(office);
+
+            $("#dispatchModal").modal('hide');
+
+
+
+                    
+
+                
+              })
             
             // console.log("request sent");
             // console.log(lf_id);
@@ -230,15 +255,42 @@ function updateDispatch(str){
 function responds(str){
 
     switch (str) {
-        case 0:
+        case "error":
             
 
-           document.write("Something is wrong somewhere, please contact your supervisor");
-
+            $("#heading").html("Something went wrong! ");
+                $("#reason").html("Request couldn't go through");
+                $(".alert ").attr("class","alert alert-danger");
+                $(".alert").show(2000,function(){
+                    this.on("click",function(){
+                        this.fadeToggle(2000);
+                    });
+                });
             break;
+        
+        case "request_failed":
+            
+                $(".alert ").attr("class","alert alert-warning");
+                 $("#heading").html("Something went wrong! ");
+            $("#reason").html("Request couldn't go through");
+            $(".alert").show(2000,function(){
+                this.on("click",function(){
+                    this.fadeToggle(2000);
+                });
+            });
+        
+        break;
 
-        case 1:
-            alert("Sorry no new letters");
+        case "success":
+            $("#heading").html("Great! ");
+                    $("#reason").html("Action was Successfully Performed");
+                    $(".alert ").attr("class","alert alert-success");
+                    $(".alert").show(2000,function(){
+                        this.on("click",function(){
+                            this.fadeToggle(2000);
+                        });
+                    });
+
 
         
             break;

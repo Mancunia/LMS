@@ -19,13 +19,11 @@ if(isset($_GET['letter'])){
 
   $unit=$app_user->exMyunit($_SESSION['office']);
 
-}
 
+}
 else{
 
 }
-
-$sign='';
 
 if(isset($_POST['dispatch'])){
   if(!isset($_POST['destination'])){
@@ -38,72 +36,16 @@ if(isset($_POST['dispatch'])){
     </div>";
   }
   else{
-
-    if(!isset($_POST['output'])){
-      $feed_msg="<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-    <strong>Attention!</strong> You forgot <strong>Sign</strong>
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>&times;</span>
-    </button>
-    </div>";
-    }
-    else{
-      $des=count($_POST['destination']);
-
-      if($des>1){
+      // $des=count($_POST['destination']);
 
         foreach($_POST['destination'] as $selected){
         
-      $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$selected,$_POST['receiver'],$_SESSION['user_id'],$sign);
+      $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$selected,$_POST['receiver'],$_SESSION['user_id']);
 
         }
-      }
-      else{
-
-        if(!isset($_POST['receiver'])){
-
-          echo "
-          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-    <strong>Attention!</strong> There has to be a <strong>receiver</strong>
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>&times;</span>
-    </button>
-    </div>
-          ";
-          
-        }
-
-        else{
-
-           $sign = base64_encode($_POST['output']);
-
-        if(!$sign){
-
-          echo "
-          <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-    <strong>Attention!</strong> Cound not convert <strong>Signature</strong>
-    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-      <span aria-hidden='true'>&times;</span>
-    </button>
-    </div>
-          ";
-
-        }
-
-        else{
-
-           $feed_msg=$lms_con->dispatch($letter_id,$_SESSION['office'],$_POST['destination'],$_POST['receiver'],$_SESSION['user_id'],$sign);
-        }
-
-        }
-
-       
-
-       
-      }
       
 
-      }
+      
     }
       
   
@@ -270,10 +212,10 @@ Receiver: <input type="text" class="form-control" name="receiver">
 </div>
 </div>
 <br>
-<div class="the-pad">
+<!-- <div class="the-pad">
 
 <ul class="sigNav">
-      <!-- <li class="typeIt"><a href="#type-it" class="current">Type It</a></li> -->
+      
       <li class="drawIt"><a href="#draw-it" >Click to Sign</a></li>
       <li class="clearButton"><a href="#clear">Clear</a></li>
     </ul>
@@ -287,7 +229,7 @@ Receiver: <input type="text" class="form-control" name="receiver">
 </div>
 
 </div>
-<button id="btn-check">check please</button>
+<button id="btn-check">check please</button> -->
 
 
 

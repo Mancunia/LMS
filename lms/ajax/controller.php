@@ -17,6 +17,7 @@ if(isset($_POST['dispatching']) && isset($_POST['receiver'])&& isset($_POST['sig
     $file = '../signature/'.$signatureFileName;
     file_put_contents($file, $data);
 
+
   echo"<script>
   alert('in da update');
   </script>";
@@ -48,7 +49,8 @@ if(isset($_GET['dispatch_id'])){
 
     echo'
     
-    <div class="container" style="margin-left:10px;">
+    <div id="mod">
+    <div  class="container" style="margin-left:10px;">
     <div class="row col-md-12">
 
       <div class="col-md-5 jumbotron">
@@ -64,7 +66,7 @@ if(isset($_GET['dispatch_id'])){
 
       <div class="col-md-2"></div>
 
-      <div class="col-md-5 jumbotron">
+        <div class="col-md-5 jumbotron">
         <p>
           
         <div class="">
@@ -93,7 +95,7 @@ if(isset($_GET['dispatch_id'])){
         
         
 
-      </div>
+    </div>
 
       <div class=" row col-md-12 container jumbotron">
       <p>
@@ -107,21 +109,9 @@ if(isset($_GET['dispatch_id'])){
       </p>
       
       </div>
-      </div>
+      
 
-
-
-      </div>
-      <input hidden name="l_id" value="'.$lf_id.'" >
-
-
-
-
-
-
-
-
-    <div class="container ">
+<div class="container ">
     <div class="row">
 
     <div class="col-md-6">
@@ -153,21 +143,34 @@ if(isset($_GET['dispatch_id'])){
         </div>
         
     </div>
+
         </div>
 
+      </div>
+      <input hidden name="l_id" value="'.$lf_id.'" >
 
-        <div class="container">
-        <div class="row">
-        signature
+
+
+
+
+
+
+
+    
+        
+
+</div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary fa-pull-right" id="next">Next</button>
+        <button type="button" style="display:none;" class="btn btn-success fa-pull-right" id="final" value="'.$lf_id.'" onclick="updateDispatch(this.value)">Dispatch</button>
+      
         </div>
-        </div>
+
         
 
 
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary fa-pull-right" value="'.$lf_id.'" onclick="updateDispatch(this.value)">Dispatch</button>
-      </div>
+       
 
     ';
 }

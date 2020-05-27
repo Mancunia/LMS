@@ -39,26 +39,11 @@ var office_id= "<?php echo $_SESSION['office'];?>";
     <div class="modal-content">
       <div class="modal-header bg-dark">
         <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Dispatching</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="container">
-
-        <div class="alert " role="alert">
-
-          <h4 class="alert-heading" id="heading">
-            <!-- Heading--> 
-          </h4>
-
-          <p id="reason">
-            <!--Reason -->
-           </p>
-          
-        </div>
-
-          </div>
 
         </div>
       <form id="signatureform" action="" method="post">
@@ -71,15 +56,12 @@ var office_id= "<?php echo $_SESSION['office'];?>";
             <div class="col-md-8 col-md-offset-2">
                 <br>
                 <hr>
-                <div id="canvasDiv"></div>
-                <br>
-                 <button type="button" class="btn btn-danger" id="reset-btn">Clear</button>
-                <!--<button type="button" class="btn btn-success" id="btn-save">Save</button> -->
+                <div id="canvasDiv"></div><button type="button" class="btn btn-danger" id="reset-btn">Clear</button>
+               
+                <hr>
+
+                 
             </div>
-            <!-- <form id="signatureform" action="" style="display:none" method="post">
-                <input type="hidden" id="signature" name="signature">
-                <input type="hidden" name="signaturesubmit" value="1">
-            </form> -->
         </div>
                 
             </form>

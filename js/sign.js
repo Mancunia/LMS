@@ -1,14 +1,14 @@
 
     $(document).ready(() => {
-        // var canvasDiv = document.getElementById('canvasDiv');
-        // var canvas = document.createElement('canvas');
-        // canvas.setAttribute('id', 'canvas');
-        // canvasDiv.appendChild(canvas);
-        // $("#canvas").attr('height', $("#canvasDiv").outerHeight());
-        // $("#canvas").attr('width', $("#canvasDiv").width());
-        // if (typeof G_vmlCanvasManager != 'undefined') {
-        //     canvas = G_vmlCanvasManager.initElement(canvas);
-        // }
+        var canvasDiv = document.getElementById('canvasDiv');
+        var canvas = document.createElement('canvas');
+        canvas.setAttribute('id', 'canvas');
+        canvasDiv.appendChild(canvas);
+        $("#canvas").attr('height', $("#canvasDiv").outerHeight());
+        $("#canvas").attr('width', $("#canvasDiv").width());
+        if (typeof G_vmlCanvasManager != 'undefined') {
+            canvas = G_vmlCanvasManager.initElement(canvas);
+        }
         
         context = canvas.getContext("2d");
         $('#canvas').mousedown(function(e) {

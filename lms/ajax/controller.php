@@ -10,12 +10,12 @@ if(isset($_POST['dispatching']) && isset($_POST['receiver'])&& isset($_POST['sig
   //processing signature 
   
   $signature = $_POST['sign'];
-    $signatureFileName = uniqid().'.png';
-    $signature = str_replace('data:image/png;base64,', '', $signature);
-    $signature = str_replace(' ', '+', $signature);
-    $data = base64_decode($signature);
-    $file = '../signature/'.$signatureFileName;
-    file_put_contents($file, $data);
+    // $signatureFileName = uniqid().'.png';
+    // $signature = str_replace('data:image/png;base64,', '', $signature);
+    // $signature = str_replace(' ', '+', $signature);
+    // $data = base64_decode($signature);
+    // $file = '../signature/'.$signatureFileName;
+    // file_put_contents($file, $data);
 
 
   echo"<script>
@@ -23,7 +23,7 @@ if(isset($_POST['dispatching']) && isset($_POST['receiver'])&& isset($_POST['sig
   </script>";
   $receiver= $_POST['receiver'];
   $l_id=$_POST['dispatching'];
-   $lms_con->updateLetter_flow($l_id,$receiver,$signatureFileName);
+   $lms_con->updateLetter_flow($l_id,$receiver,$signature);
   
 
   
@@ -316,9 +316,9 @@ if(isset($_GET['dispatched'])){
               
               echo'<td>
               <div class="">
-               <a href="letter.php?letter='.$r['letter_id'].'" title="view Letter"><i class="fa fa-eye" aria-hidden=""></i>
+               <button data-toggle="modal" class="btn" data-target="#dispatchModal" value="'.$r['letter_flow_id'].'" onclick="dispatched(this.value)" title="View Letter"><i class="fa fa-eye" aria-hidden=""></i>
                
-               </a>
+               </button>
                
               
                
@@ -338,6 +338,154 @@ if(isset($_GET['dispatched'])){
 
 
 
+
+
+
+if(isset($_GET['dispatched_single'])){
+  $result=$lms_con->getDispatch_final($_GET['dispatched_single']);
+
+  $l=mysqli_fetch_array($result);
+    $lf_id=$l['letter_flow_id'];
+    $sign=$l['signature'];
+    $letter_id=$l['letter_id'];
+    $receiver=$l['receiver'];
+    $destination=$l['des'];
+    $date=$l['date'];
+    $s_addr=$l['send_address'];
+    $r_addr=$l['receiver_address'];
+    $subject=$l['letter_subject'];
+    $ref=$l['letter_ref'];
+
+    // $data = base64_decode($sign);
+
+
+    //form
+    echo'
+    
+    <div id="mod">
+    <div class="container" align="left">
+    <strong style="font-size:20pt; background-color:rgba(0,0,0,0.4); border-radius:5px;">'.$letter_id.'</strong>
+    </div>
+    <div  class="container" style="margin-left:10px;">
+    <div class="row col-md-12">
+
+      <div class="col-md-5 jumbotron">
+        <p>
+           
+        <div class="row">
+        '.$r_addr.'
+        </div>
+       
+        </p>
+        
+      </div>
+
+      <div class="col-md-2"></div>
+
+        <div class="col-md-5 jumbotron">
+        <p>
+          
+        <div class="">
+        '.$s_addr.'
+        </div>
+        </p>
+      
+      </div>
+
+
+      
+
+      
+      </div>
+      
+      <div class="row container">
+        
+
+        <div class="col-md-12 row">
+          Reference:
+        <div class="">
+        <b>'.$ref.'</b>
+        </div>
+        
+        </div>
+        
+        
+
+    </div>
+
+      <div class=" row col-md-12 container jumbotron">
+      <p>
+    
+        <div class="">
+        '.$subject.'
+        </div>
+        
+
+
+      </p>
+      
+      </div>
+      
+
+<div class="container ">
+    <div class="row">
+
+    
+
+    <div class="col-md-6">
+    <label for="des" class="">To</label>
+    <input type="text" name="des" class="form-control" value="'.$extras->get_unit($destination).'" readonly>
+    </div>
+    
+    <div class="col-md-6">
+        <label for="sender" class="">Date</label>
+        <input type="text" name="sender" class="form-control" value="'.$date.'" readonly>
+        </div>
+
+
+    </div>
+     
+    </div>
+<hr>
+    <div class="container ">
+    <div class="row">
+        <div class="col-md-8 " style="border-color:black; border-radius:10px; border-width:10px;">
+          <img src="'.$sign.'" width="300">
+
+        </div>
+    
+
+        <div class="col-md-4">
+    <label for="src" class="">Receiver</label>
+    <input type="text" name="src" class="form-control" value="'.$receiver.'" readonly>
+    </div>
+        
+    </div>
+
+        </div>
+
+      </div>
+      <br>
+
+      
+
+
+
+
+
+
+
+
+    
+        
+
+</div>
+';
+
+            
+
+
+}
 
 
 

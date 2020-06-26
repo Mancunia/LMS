@@ -10,8 +10,8 @@ class app_user{
         $conn = Database::getInstance();
         $db = $conn->getConnection();
 
-       mysqli_query($db," INSERT INTO `lms`.`unit` (`unit_name`, `unit_acronym`,`department_id`)
-        VALUES ('$unit', '$acro','$depart')" );
+       mysqli_query($db," INSERT INTO `lms`.`unit` (`unit_name`,`department_id`)
+        VALUES ('$unit','$depart')" );
        
     }
 
@@ -122,11 +122,11 @@ catch (PDOException $ex){
             $conn = Database::getInstance();
         $db = $conn->getConnection();
             if($unit==1){
-                $result=mysqli_query($db,"SELECT * FROM users where unit>=2");
+                $result=mysqli_query($db,"SELECT u.*,p.* FROM users u join person p on p.person_id=u.person_id where unit_id>=2");
                 // return $result; 
             }
             else{
-            $result=mysqli_query($db,"SELECT * FROM users where role='staff' and unit='$unit'");
+            $result=mysqli_query($db,"SELECT u.*,p.* FROM users u join person p on p.person_id=u.person_id where u.role=3 and u.unit_id='$unit'");
             }
             return $result;
         }
@@ -137,7 +137,7 @@ catch (PDOException $ex){
     }
 
 //Add new account
-    function newPerson($username,$fname,$lname,$dob,$emp_num,$phone1,$phone2,$address,$rank,$email)
+    function newPerson($username,$fname,$lname,$dob,$emp_num,$phone1,$address,$rank,$email)
     {
         try{
 // echo $username;
@@ -145,7 +145,7 @@ catch (PDOException $ex){
             $conn = Database::getInstance();
         $db = $conn->getConnection();
 // echo $fname;
-        $chk=mysqli_query($db,"SELECT * FROM user where `username`='$username'");
+        $chk=mysqli_query($db,"SELECT * FROM users where `userName`='$username'");
         $row=mysqli_num_rows($chk);
         
         if($row>0){
@@ -160,7 +160,7 @@ catch (PDOException $ex){
         }
 
         else {
-            $sid=mysqli_query($db,"SELECT * FROM person where employee_number='$emp_num'");
+            $sid=mysqli_query($db,"SELECT * FROM person where staff_id='$emp_num'");
             if(mysqli_num_rows($sid)>=1){
                 echo"
            <div class='alert alert-danger alert-dismissible fade show' role='alert'>
@@ -194,14 +194,14 @@ catch (PDOException $ex){
                     ";
                     }
                     else{
-                        $feed=mysqli_query($db,"INSERT INTO `lms`.`person` (`first_name`, `last_name`, `rank_id`, `dob`, `employee_number`, `phone`, `phone_2`, `address`, `email`, `created_date`) 
-                VALUES ('$fname', '$lname', '$rank', '$dob', '$emp_num', '$phone1', '$phone2', '$address', '$email',NOW())");
+                $feed=mysqli_query($db,"INSERT INTO `lms`.`person` (`f_name`, `l_name`, `dob`, `staff_id`, `rank_id`, `email`, `person_address`,`phone`) 
+                                             VALUES ('$fname','$lname','$dob','$emp_num','$rank','$email','$address','$phone1')");
             // echo $rank;
             // VALUES ('$fname', '$lname', '$rank','$dob', '$emp_num', '$phone1','$phone2', '$address', '$email',NOW()) ");
             if (!$feed){
             echo"
             <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-            <strong>OOPs!</strong> There is something wrong <b>NOTE!</b> Check all details
+            <strong>OOPs!</strong> There is something wrong <b>NOTE!</b> Couldn't create person
             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
             <span aria-hidden='true'>&times;</span>
             </button>
@@ -257,7 +257,7 @@ catch (PDOException $ex){
     }
 
 
-    function newUser($pers_id,$username,$role,$unit,$acnt,$by){
+    function newUser($pers_id,$username,$role,$unit){
 //New user acount
  $conn = Database::getInstance();
         $db = $conn->getConnection();
@@ -266,7 +266,7 @@ catch (PDOException $ex){
         if($pers_id==0){
           return"
 <div class='alert alert-danger alert-dismissible fade show' role='alert'>
-<strong>OOPs!</strong> There is something wrong <b>NOTE!</b>, Check all details
+<strong>OOPs!</strong> There is something wrong <b>NOTE!</b>, Couldn't create User
 <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 <span aria-hidden='true'>&times;</span>
 </button>
@@ -274,9 +274,9 @@ catch (PDOException $ex){
 ";  
         }
         else{
-
-            $feed=mysqli_query($db," INSERT INTO `lms`.`user` (`username`, `password`, `person_id`, `role`, `grp_id`, `unit_id`, `date_created`, `created_by`) 
-        VALUES ('$username', '$username', '$pers_id', '$role', '$acnt', '$unit', NOW(), '$by')");
+echo $pers_id.$username.$role.$unit;
+            $feed=mysqli_query($db," INSERT INTO `lms`.`user` (`userName`, `password`, `unit_id`, `person_id`, `role`) 
+        VALUES ('$username', '$username','$unit', '$pers_id', '$role')");
         
 
         if($feed){
@@ -313,7 +313,7 @@ function getUserByunit($unit){
     $conn = Database::getInstance();
     $db = $conn->getConnection();
 
-    $result=mysqli_query($db,"SELECT u.*,p.*,r.rank_title FROM user u join person p on u.person_id=p.person_id join rank r on p.rank_id=r.rank_id where u.unit_id='$unit' and u.grp_id<>4");
+    $result=mysqli_query($db,"SELECT u.*,p.*,r.role_name FROM users u join person p on u.person_id=p.person_id join role r on u.role=r.role_id where u.unit_id='$unit' and u.role<>2");
 $count=mysqli_num_rows($result);
 // if ($count>=1){
 return $result;
@@ -768,7 +768,7 @@ class lms_con{
                 select f.source  , f.receiver,l.letter_id, l.letter_subject , l.letter_ref as ref, l.letter_source as org_source, l.letter_date, f.date as flow_date
                 from letter_flow f join letter l 
                 on l.letter_id=f.letter_id
-                where des = '$unit_id' and here=1 and receiver is not null and signature is not null
+                where des = '$unit_id' and here=1 and receiver is not null and signature is not null order by f.date desc
                 ");
 
                 return $here;
@@ -882,6 +882,31 @@ class lms_con{
             }
         }
 
+        function getDispatch_final($id){
+            try{
+                $conn = Database::getInstance();
+                $db = $conn->getConnection();
+                $result=mysqli_query($db,"select lf.letter_flow_id, lf.des, lf.receiver, lf.signature, lf.date, lf.letter_id, l.letter_subject, l.letter_ref, l.send_address, l.receiver_address from letter_flow lf 
+                join letter l on lf.letter_id=l.letter_id
+                where lf.letter_flow_id = '$id' and lf.status=1 and lf.signature IS NOT NULL and lf.receiver IS NOT NULL");
+                if($result){
+                    return $result;
+                }
+                else{
+                    echo "
+                    <script>
+                    alert('Something isn't right');
+                    </script>
+                    ";
+                }
+                
+            }
+            catch(Exception $e){
+                $error = $e->getMessage();
+                echo $error;
+            }
+        }
+
         function updateLetter_flow($id,$receiver,$sign){
             try{
 
@@ -894,7 +919,7 @@ class lms_con{
                 // echo "hello";
                 $conn = Database::getInstance();
                 $db = $conn->getConnection();
-                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='$sign' WHERE `letter_flow_id`='$id'
+                $result=mysqli_query($db,"UPDATE `lms`.`letter_flow` SET `receiver`='$receiver', `signature`='$sign',`date`=NOW() WHERE `letter_flow_id`='$id'
                 ");
                 //  echo "hell";
                 if($result){
@@ -956,7 +981,7 @@ class lms_con{
                 from letter_flow lf join letter l
                 on lf.letter_id=l.letter_id join unit u
                 on u.unit_id=lf.source
-                where lf.source='$id' and lf.here=1 and lf.receiver is not null and lf.signature is not null ");
+                where lf.source='$id' and lf.receiver is not null and lf.signature is not null order by lf.date desc  ");
 
                  if($result){
                      return $result;

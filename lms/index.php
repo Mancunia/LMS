@@ -38,7 +38,7 @@ var office_id= "<?php echo $_SESSION['office'];?>";
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header bg-dark">
-        <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Dispatching</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white;">Letter</h5>
         <button type="button" class="close btn" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -56,7 +56,9 @@ var office_id= "<?php echo $_SESSION['office'];?>";
             <div class="col-md-8 col-md-offset-2">
                 <br>
                 <hr>
-                <div id="canvasDiv"></div><button type="button" class="btn btn-danger" id="reset-btn">Clear</button>
+                <div id="canvasDiv">
+                  
+                </div><button type="button" style="display:none;" class="btn btn-danger" id="reset-btn">Clear</button>
                
                 <hr>
 

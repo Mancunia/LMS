@@ -114,6 +114,7 @@ function loadDispatched(str){
 
 
 function getDispatch(str){
+    console.log(str);
     if (str == "") {
         document.getElementById("txtHint").innerHTML = "";
         return;
@@ -190,8 +191,8 @@ function updateDispatch(str){
 
             },
             success:function(){
-                alert("this is the success callback");
-            
+                // alert("this is the success callback");
+                responds("success");
 
             },
             error:function(){
@@ -222,13 +223,46 @@ function updateDispatch(str){
 }
 
 
+function dispatched(str){
+    console.log(str);
+    
+    if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                $("#form").html(this.responseText);
+                
+            }
+        };
+        xmlhttp.open("GET","ajax/controller.php?dispatched_single="+str,true);
+        xmlhttp.send();
+    }
+    
+}
+
+
+
+
+//Responds and error handling feedbacks
+
+
+
 
 function responds(str){
 
     switch (str) {
         case "error":
             
-            icon.setAttribute('class', 'fa fa-times fa-3x');
+            $("#icon").setAttribute('class', 'fa fa-times fa-3x');
 
             $("#heading").html("Something went wrong! ");
                 $("#reason").html("Request couldn't go through");
@@ -238,7 +272,7 @@ function responds(str){
         
         case "request_failed":
             
-            icon.setAttribute('class', 'fa fa-times fa-3x');
+            $("#icon").setAttribute('class', 'fa fa-times fa-3x');
 
                 $(".alert ").attr("class","alert alert-warning");
                  $("#heading").html("Something went wrong! ");
@@ -249,11 +283,11 @@ function responds(str){
 
         case "success":
            
-            icon.setAttribute('class', 'fa-li fa fa-check-square fa-3x');
+            $("#icon").setAttribute('class', 'fa-li fa fa-check-square fa-3x');
             
             $("#heading").html("Great! ");
                     $("#reason").html("Action was Successfully Performed");
-                    $("#reason").appendChild(icon);
+                    // $("#reason").appendChild(icon);
                     $(".alert ").attr("class","alert alert-success");
                     $(".alert").show(2000);
 
@@ -262,7 +296,7 @@ function responds(str){
             break;
         case "loading":
 
-        icon.attr('class', 'fa fa-circle-o-notch fa-spin fa-3x fa-fw');
+            $("#icon").attr('class', 'fa fa-circle-o-notch fa-spin fa-3x fa-fw');
         
 
 
@@ -280,9 +314,6 @@ function responds(str){
 }
 
 
-function dispatch(){
-    
-}
 
 
 
@@ -310,10 +341,17 @@ $(document).on('click','#next',function(){
             $("#canvasDiv").css("display","block");
             $("#next").hide(1000);
             $("#final").show(1000);
+            $("#reset-btn").css("display","block");
 
           });
       }
 
+});
+
+$(document).on('click','#final',function(){
+   if($("#receiver").val()==""){
+    $("#receiver").css('display','block');
+   }
 });
 
 $(document).on('click','.close',function(){
@@ -357,10 +395,10 @@ $("#receiver").on('mouseout',function(){
 
 
     $(document).bind("ajaxSend", function(){
-        responds("loading");
+        $("#dispatchModal").css("opaque","0");
 
       }).bind("ajaxComplete", function(){
-         responds("success");
+        $("#dispatchModal").css("opaque","1");
       }).bind("ajaxError",function(){
 
       });
